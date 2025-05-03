@@ -59,9 +59,10 @@
                   <div
                     class="gallery-card"
                     v-for="(card, idx) in column"
-                    :key="idx"
-                  >
+                    :key="idx">
+                    <router-link to="/pages/PageSite14">
                     <img :src="card.image" class="card-image" />
+                  </router-link>
                     <div class="card-info">
                       <div class="user">
                         <div class="profile">

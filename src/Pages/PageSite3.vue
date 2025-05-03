@@ -2,7 +2,13 @@
   <div class="image-success">
     <div class="nav-icons">
       <div class="nav-group">
-        <img :src="NavigateLeft" class="nav-icon" />
+  
+        <img
+          :src="NavigateLeft"
+          class="nav-icon"
+          @click="goToPageSite2"
+          style="cursor: pointer;"
+        />
         <img :src="NavigateRight" class="nav-icon" />
       </div>
       <div class="home-icon-container">
@@ -13,9 +19,11 @@
         <span class="create-text">Create</span>
       </div>
     </div>
+
     <div class="Paint-Image-container">
       <img :src="PaintImage" class="Paint-Image" />
     </div>
+
     <div class="properties-info-row">
       <div class="properties-info-switch">
         <div
@@ -35,6 +43,7 @@
       </div>
       <img :src="ButtonDark" class="dark-button" />
     </div>
+
     <div class="success-container">
       <img :src="SuccessImage" alt="Success" class="success-image" />
       <div class="success-texts-column">
@@ -46,11 +55,15 @@
         </div>
       </div>
       <div class="success-buttons">
-        <button class="btn-primary">
-          <img :src="DownArrow" alt="Download icon" class="btn-icon" />
-          Download
-        </button>
-        <button class="btn-secondary">
+
+
+<button type="button" class="btn-primary" @click.prevent="handleDownload">
+  <img :src="DownArrow" alt="Download icon" class="btn-icon" />
+  Download
+</button>
+
+
+        <button type="button" class="btn-secondary" @click.prevent="goToCreatePost">
           <img :src="PlusImage" alt="Create post icon" class="btn-icon" />
           Create post
         </button>
@@ -69,6 +82,8 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 import NavigateLeft from '@/assets/NavigateLeft.png'
 import NavigateRight from '@/assets/NavigateRight.png'
 import Home from '@/assets/Home2.png'
@@ -85,6 +100,23 @@ import Dribbble from '@/assets/Dribbble.png'
 import Linkedln from '@/assets/Linkedln.png'
 
 const activeTab = ref('properties')
+const router = useRouter()
+
+
+function goToPageSite2() {
+  router.push('/pages/PageSite2')
+}
+
+function handleDownload() {
+  alert('Download done')
+  router.push('/pages/PageSite4')
+}
+
+
+function goToCreatePost() {
+  console.log('Creating post, going to /pages/PageSitePost')
+  router.push('/pages/PageSite4')
+}
 </script>
 
 <style scoped>
@@ -244,7 +276,6 @@ const activeTab = ref('properties')
   font-weight: 600;
   cursor: pointer;
 }
-
 
 .success-divider {
   width: 403px;

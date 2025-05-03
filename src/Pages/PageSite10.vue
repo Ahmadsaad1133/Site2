@@ -2,7 +2,7 @@
     <div class="pagesite10">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="LeftArrow" class="nav-icon" />
+          <img :src="LeftArrow" class="nav-icon" @click="navigateBack" />
           <img :src="NavigateRight" class="nav-icon" />
         </div>
         <div class="home-icon-container">
@@ -71,9 +71,33 @@
               </div>
             </div>
             <div class="genre-tags-row">
-              <span class="genre-pill genre-pill--large">Abstract</span>
-              <span class="genre-pill genre-pill--medium">Sci-fi</span>
-              <span class="genre-pill genre-pill--large">Fantasy</span>
+              <span
+    class="genre-pill genre-pill--large"
+    :class="{
+      'active-pill': selectedPillIndex === 0
+    }"
+    @click="selectPill(0)"
+  >
+    Abstract
+  </span>
+  <span
+    class="genre-pill genre-pill--medium"
+    :class="{
+      'active-pill': selectedPillIndex === 1
+    }"
+    @click="selectPill(1)"
+  >
+    Sci-fi
+  </span>
+  <span
+    class="genre-pill genre-pill--large"
+    :class="{
+      'active-pill': selectedPillIndex === 2
+    }"
+    @click="selectPill(2)"
+  >
+    Fantasy
+  </span>
   <button class="genre-add" @click="addGenre">
     <span class="genre-add-icon">
       <img :src="Add" class="Add-Icon" />
@@ -88,13 +112,36 @@
               <button class="color-clear">
                 <img :src="XImg" alt="Clear" class="X-Icon" />
               </button>
-              <div class="color-badge blue"></div>
-              <div class="color-badge red"></div>
-              <div class="color-badge orange"></div>
-              <div class="color-badge pink"></div>
-              <div class="color-badge yellow"></div>
-              <div class="color-badge gray"></div>
-              <div class="color-divider"></div>
+              <div 
+      class="color-badge blue" 
+      :class="{'selected-color': selectedColor === 'blue'}" 
+      @click="selectedColor = 'blue'"
+    ></div>
+    <div 
+      class="color-badge red" 
+      :class="{'selected-color': selectedColor === 'red'}" 
+      @click="selectedColor = 'red'"
+    ></div>
+    <div 
+      class="color-badge orange" 
+      :class="{'selected-color': selectedColor === 'orange'}" 
+      @click="selectedColor = 'orange'"
+    ></div>
+    <div 
+      class="color-badge pink" 
+      :class="{'selected-color': selectedColor === 'pink'}" 
+      @click="selectedColor = 'pink'"
+    ></div>
+    <div 
+      class="color-badge yellow" 
+      :class="{'selected-color': selectedColor === 'yellow'}" 
+      @click="selectedColor = 'yellow'"
+    ></div>
+    <div 
+      class="color-badge gray" 
+      :class="{'selected-color': selectedColor === 'gray'}" 
+      @click="selectedColor = 'gray'"
+    ></div>
               <button class="color-add">
                 <img :src="BlackAdd" alt="Add" class="Add-Icon" />
               </button>
@@ -115,7 +162,7 @@
       </div>
     </div>
   </div>
-          <button class="create-button">Create</button>
+  <button class="create-button" @click="handleCreate">Create</button>
   
         </div>
       </div>
@@ -124,6 +171,7 @@
   
   <script setup>
   import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
   import LeftArrow from '@/assets/LeftArrow.png'
   import NavigateRight from '@/assets/NavigateRight.png'
   import Home from '@/assets/Home2.png'
@@ -137,16 +185,28 @@
   import Add from '@/assets/Add.png'
   import Folder25 from '@/assets/Folder25.png'
   
-  
+  const router = useRouter()
   const activeTab = ref('properties')
   const selectedGenre = ref('')
   const genres = ref([])
+  function handleCreate() {
+  
+  alert('Create success')
+  router.push({ name: 'PageSite11' })}
+  const navigateBack = () => {
+  router.push('/pages/PageSite9')
+}
   
   const addGenre = () => {
     if (selectedGenre.value && !genres.value.includes(selectedGenre.value)) {
       genres.value.push(selectedGenre.value)
     }
   }
+  const selectedPillIndex = ref(null)
+  const selectPill = (index) => {
+  selectedPillIndex.value = index
+}
+  const selectedColor = ref(null);
   </script>
   
   <style scoped>
@@ -413,6 +473,7 @@
     display: flex;
     margin-top: 15px;
     align-items: center;
+    cursor: pointer;
     justify-content: center;
     background: white;
     border: 2px solid #9CA3AF;
@@ -458,7 +519,10 @@
     height: 100%;
     object-fit: contain;
   }
-  
+  .active-pill {
+  background-color: #111827;
+  color: white;  
+}
   
   
   .color-badges-row {
@@ -520,6 +584,7 @@
   .color-badge {
   width: 32px;
   height: 32px;
+  cursor: pointer;
   border-radius: 50%;
   }
   
@@ -552,6 +617,9 @@
   height: 33px;
   background: #374151;
   }
+  .selected-color {
+  border: 2px solid greenyellow !important;
+}
   
   .sample-dropzone {
     display: flex;

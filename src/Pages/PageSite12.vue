@@ -2,7 +2,7 @@
     <div class="PageSite12">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="LeftArrow" class="nav-icon" />
+          <img :src="LeftArrow" class="nav-icon" @click="goToPageSite11" style="cursor: pointer;" />
           <img :src="NavigateRight" class="nav-icon" />
         </div>
         <div class="home-icon-container">
@@ -30,8 +30,15 @@
         <div class="title-group">
           <label for="title" class="input-label">Title</label>
           <div class="title-input-wrapper">
-            <input id="title" type="text" class="title-input" readonly />
-            <div class="input-text-overlay">
+            <input
+            id="title"
+            type="text"
+            class="title-input"
+            v-model="title"
+            @focus="isTitleFocused = true"
+            @blur="isTitleFocused = false"
+          />
+            <div class="input-text-overlay"  v-if="!title && !isTitleFocused">
               <span class="text-primary">The Starry Ni</span><span class="text-secondary">ght</span>
             </div>
           </div>
@@ -45,10 +52,16 @@
             <img :src="Arrow" class="select-arrow" />
           </div>
         </div>
-        <div class="genres-row">
-          <span class="genre-pill" style="width: 91px;">Abstract</span>
-          <span class="genre-pill" style="width: 69px;">Sci-fi</span>
-          <span class="genre-pill" style="width: 91px;">Abstract</span>
+        <div class="genres-row" >
+          <span class="genre-pill" style="width: 91px;" :class="{ active: selectedGenres.includes('Abstract2') }" @click="toggleGenre('Abstract2')">
+          Abstract
+        </span>
+        <span class="genre-pill" style="width: 69px;" :class="{ active: selectedGenres.includes('Sci-fi') }" @click="toggleGenre('Sci-fi')">
+          Sci-fi
+        </span>
+        <span class="genre-pill" style="width: 91px;" :class="{ active: selectedGenres.includes('Abstract') }" @click="toggleGenre('Abstract')">
+          Abstract
+        </span>
           <button class="genre-add-button">
             <img :src="Add" class="add-pill-icon" />
           </button>
@@ -57,14 +70,21 @@
         <div class="description-group">
           <label for="description" class="description-label">Description</label>
           <div class="description-input-wrapper">
-            <textarea id="description" class="description-input"></textarea>
-            <div class="description-placeholder">Talk about your art...</div>
+            <textarea
+            id="description"
+            class="description-input"
+            v-model="description"
+            @focus="isDescriptionFocused = true"
+            @blur="isDescriptionFocused = false"
+          ></textarea>
+            <div class="description-placeholder" v-if="!description && !isDescriptionFocused"
+            >Talk about your art...</div>
           </div>
         </div>
       </div>
 
       <div class="button-row">
-        <button class="button-draft">
+        <button class="button-draft" @click="saveDraft">
           <img :src="Folder11" class="folder-icon" />
           <span class="text-draft">Save draft</span>
         </button>
@@ -73,9 +93,14 @@
         </button>
       </div>
     </div>
+    <div v-if="savedMessage" class="draft-saved-message">
+    <span>Draft Saved</span>
+  </div>
   </template>
   
   <script setup>
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
   import LeftArrow from '@/assets/LeftArrow.png'
   import NavigateRight from '@/assets/NavigateRight.png'
   import Home from '@/assets/Home2.png'
@@ -86,6 +111,33 @@
   import Add from '@/assets/Add.png'
   import Arrow from '@/assets/Arrow.png'
   import Folder11 from '@/assets/Folder11.png'
+  const router = useRouter()
+function goToPageSite11() {
+  router.push('/pages/PageSite11')
+}
+  const title = ref('')
+const isTitleFocused = ref(false)
+  const selectedGenres = ref([])
+  const description = ref('')
+  const isDescriptionFocused = ref(false)
+  const savedMessage = ref(false)
+  function saveDraft() {
+
+  savedMessage.value = true
+  
+
+  setTimeout(() => {
+    savedMessage.value = false
+  }, 3000)
+}
+
+  function toggleGenre(genre) {
+  if (selectedGenres.value[0] === genre) {
+    selectedGenres.value = []; 
+  } else {
+    selectedGenres.value = [genre]; 
+  }
+}
   </script>
   
   <style scoped>
@@ -169,7 +221,7 @@
     gap: 40px;
   }
   .title-group { display: flex; flex-direction: column; gap: 8px; }
-  .input-label { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; color: #111827; }
+  .input-label { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; color: #111827; padding-left: 12px; }
   .title-input-wrapper { position: relative; width: 636px; height: 44px; }
   .title-input {
     width: 100%;
@@ -177,8 +229,9 @@
     background-color: #FFFFFF;
     border: 2px solid #9CA3AF;
     border-radius: 12px;
-    padding: 0;
-    color: transparent;
+    padding: 12px;
+    padding-left: 12px;
+    color: black;
     box-sizing: border-box;
   }
   .title-input:focus { outline: none; box-shadow: 0 0 0 3px #2563EBCC; }
@@ -231,6 +284,7 @@
     border-radius: 32px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
+    cursor: pointer;
     color: #6B7280;
     padding: 0 12px;
     box-sizing: border-box;
@@ -247,6 +301,11 @@
     padding: 0;
     box-sizing: border-box;
   }
+  .genre-pill.active {
+  border: 2px solid #ffffff; 
+  background-color: #2563EB; 
+  color: #ffffff; 
+}
   
   .description-group { display: flex; flex-direction: column; gap: 8px; }
   .description-label { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; color: #111827; }
@@ -254,6 +313,7 @@
   .description-input {
     width: 100%;
     height: 100%;
+    padding-left: 12px;
     background-color: #FFFFFF;
     border: 2px solid #9CA3AF;
     border-radius: 12px;
@@ -262,7 +322,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     line-height: 20px;
-    color: #ffffff;
+    color: black;
     resize: none;
   }
   .description-input:focus { outline: none; box-shadow: 0 0 0 3px #2563EBCC; }
@@ -291,6 +351,7 @@
   .button-draft {
     width: 207px;
     height: 52px;
+    cursor: pointer;
     background-color: #E5E7EB;
     border: none;
     border-radius: 12px;
@@ -301,6 +362,19 @@
     gap: 8px;
     box-sizing: border-box;
   }
+  .draft-saved-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2563EB;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  z-index: 10; 
+}
   .folder-icon { width: 24px; height: 24px; }
   .text-draft {
     width: 90px;

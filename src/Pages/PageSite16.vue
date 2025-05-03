@@ -2,8 +2,10 @@
     <div class="PageSite16">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="LeftArrow" class="nav-icon" />
-          <img :src="NavigateRight" class="nav-icon" />
+          <img :src="LeftArrow" class="nav-icon "  />
+          <img :src="NavigateRight" class="nav-icon cursor-pointer"
+          alt="Back" @click="goBack" />
+
         </div>
         <div class="home-icon-container">
           <img :src="Home" class="home-icon" />
@@ -71,6 +73,7 @@
   </template>
   
   <script setup>
+  import { useRouter } from 'vue-router'
   import LeftArrow from '@/assets/LeftArrow.png'
   import NavigateRight from '@/assets/NavigateRight.png'
   import Home from '@/assets/Home2.png'
@@ -80,7 +83,13 @@
   import Add from '@/assets/Add.png'
   import Arrow from '@/assets/Arrow.png'
   import Folder11 from '@/assets/Folder11.png'
+  
+  const router = useRouter()
+  const goBack = () => {
+  router.push('/PageSite15')
+}
   </script>
+  
   
   <style scoped>
   @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');

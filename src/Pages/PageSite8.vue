@@ -2,7 +2,7 @@
     <div class="page-site8">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="NavigateLeft" class="nav-icon" />
+          <img :src="NavigateLeft" class="nav-icon"  @click="goToPageSite7" style="cursor: pointer;"/>
           <img :src="NavigateRight" class="nav-icon" />
         </div>
         <div class="home-icon-container">
@@ -27,8 +27,15 @@
         <div class="title-group">
           <label for="title" class="input-label">العنوان</label>
           <div class="title-input-wrapper">
-            <input id="title" type="text" class="title-input" readonly />
-            <div class="input-text-overlay">
+            <input
+            id="title"
+            type="text"
+            class="title-input"
+            v-model="title"
+            @focus="isTitleFocused = true"
+            @blur="isTitleFocused = false"
+          />
+          <div class="input-text-overlay" v-if="!title && !isTitleFocused">
               <span class="text-primary">الليالي المرصعة </span><span class="text-secondary">بالنجوم </span>
             </div>
           </div>
@@ -43,34 +50,42 @@
           </div>
         </div>
         <div class="genres-row">
-          <span class="genre-pill" style="width: 91px;">الملخص</span>
-          <span class="genre-pill" style="width: 69px;">الخيال</span>
-          <span class="genre-pill" style="width: 91px;">الملخص</span>
+          <span class="genre-pill" style="width: 91px;" :class="{ active: selectedGenres.includes('Abstract2') }" @click="toggleGenre('Abstract2')">
+            الملخص
+        </span>
+        <span class="genre-pill" style="width: 69px;" :class="{ active: selectedGenres.includes('Sci-fi') }" @click="toggleGenre('Sci-fi')">
+          الخيال
+        </span>
+        <span class="genre-pill" style="width: 91px;" :class="{ active: selectedGenres.includes('Abstract') }" @click="toggleGenre('Abstract')">
+          الملخص
+        </span>
           <button class="genre-add-button">
             <img :src="Add" class="add-pill-icon" />
           </button>
         </div>
-        <div class="description-group">
-          <label for="description" class="description-label">الوصف</label>
-          <div class="description-input-wrapper">
-            <textarea id="description" class="description-input"></textarea>
-            <div class="description-placeholder">تحدث عن فنك..</div>
-          </div>
-        </div>
+        <div class="description-group">         <label for="description" class="description-label">Description</label>         <div class="description-input-wrapper">           <textarea             id="description"             class="description-input"             v-model="description"             @focus="isDescriptionFocused = true"             @blur="isDescriptionFocused = false"           ></textarea>           <div class="description-placeholder" v-if="!description && !isDescriptionFocused">            تحدث عن فنك..        </div>         </div>       </div>
       </div>
       <div class="button-row">
-        <button class="button-draft">
+        <button class="button-draft" @click="saveDraft">
           <img :src="Folder2" class="folder-icon" />
           <span class="text-draft">حفظ المسودة</span>
         </button>
-        <button class="button-post">
+        <button class="button-post" @click="savePost">
           <span class="text-post">بريد</span>
         </button>
       </div>
     </div>
+    <div v-if="savedMessage" class="draft-saved-message">
+    <span>Draft Saved</span>
+  </div>
+  <div v-if="savedMessage" class="Post-saved-message">
+    <span>Post Done</span>
+  </div>
   </template>
   
   <script setup>
+  import { ref } from 'vue'
+import { useRouter } from 'vue-router'
   import NavigateLeft from '@/assets/NavigateLeft.png'
   import NavigateRight from '@/assets/NavigateRight.png'
   import Home from '@/assets/Home2.png'
@@ -80,6 +95,42 @@
   import Add from '@/assets/Add.png'
   import Arrow from '@/assets/Arrow.png'
   import Folder2 from '@/assets/Folder2.png'
+  const title = ref('')
+  const savedMessage = ref(false)
+  const selectedGenres = ref([])
+  const description = ref('')
+  const isDescriptionFocused = ref(false)
+  const isTitleFocused = ref(false)
+  const router = useRouter()
+function goToPageSite7() {
+  router.push('/pages/PageSite7')
+}
+function toggleGenre(genre) {
+  if (selectedGenres.value[0] === genre) {
+    selectedGenres.value = []; 
+  } else {
+    selectedGenres.value = [genre]; 
+  }
+}
+function saveDraft() {
+
+  savedMessage.value = true
+  
+
+  setTimeout(() => {
+    savedMessage.value = false
+  }, 3000)
+}
+function savePost() {
+
+  savedMessage.value = true
+  
+
+  setTimeout(() => {
+    savedMessage.value = false
+  }, 3000)
+}
+
   </script>
   
   <style scoped>
@@ -167,7 +218,7 @@
     flex-direction: column;
     gap: 40px;
   }
-  .title-group { display: flex; flex-direction: column; gap: 8px ; }
+  .title-group { display: flex; flex-direction: column; gap: 8px; }
   .input-label { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; color: #ffffff;transform: scaleX(-1);text-align: right; }
   .title-input-wrapper { position: relative; width: 636px; height: 44px; }
   .title-input {
@@ -176,8 +227,9 @@
     background-color: #171A2B;
     border: 2px solid #374151;
     border-radius: 12px;
-    padding: 0;
-    color: transparent;
+    transform: scaleX(-1);text-align: right;
+    padding-right: 10px;
+    color: #ffffff;
     box-sizing: border-box;
   }
   .title-input:focus { outline: none; box-shadow: 0 0 0 3px #2563EBCC; }
@@ -234,6 +286,11 @@
     padding: 0 12px;
     box-sizing: border-box;
   }
+  .genre-pill.active {
+  border: 2px solid #ffffff; 
+  background-color: #2563EB; 
+  color: #ffffff;
+}
   .genre-add-button {
     width: 52px;
     height: 36px;
@@ -255,6 +312,7 @@
     background-color: #111827;
     border: 2px solid #374151;
     border-radius: 12px;
+    transform: scaleX(-1);text-align: right;
     padding: 12px;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
@@ -301,6 +359,34 @@
     gap: 8px;
     box-sizing: border-box;
   }
+  .button-post {
+    width: 207px;
+    height: 52px;
+    background-color: #252A41;
+    border: none;
+    border-radius: 12px;
+    flex-direction: row-reverse;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    gap: 8px;
+    box-sizing: border-box;
+
+  }
+  .draft-saved-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2563EB;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  z-index: 10; 
+}
   .folder-icon { width: 24px; height: 24px; }
   .text-draft {
     width: 90px;

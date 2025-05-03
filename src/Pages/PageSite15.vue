@@ -51,7 +51,7 @@
             <img :src="DownArrow" alt="Download icon" class="btn-icon" />
             تحميل
           </button>
-          <button class="btn-secondary">
+          <button class="btn-secondary"  @click.prevent="goToCreatePost">
             <img :src="PlusImage" alt="Create post icon" class="btn-icon" />
             إنشاء منشور
           </button>
@@ -69,6 +69,7 @@
   </template>
   
   <script setup>
+    import { useRouter } from 'vue-router'
   import { ref } from 'vue'
   import LeftArrow from '@/assets/LeftArrow.png'
   import NavigateRight from '@/assets/NavigateRight.png'
@@ -84,7 +85,11 @@
   import Discord2 from '@/assets/Discord2.png'
   import Dribbble2 from '@/assets/Dribbble2.png'
   import Linkedln2 from '@/assets/LinkedIn2.png'
-  
+  const router = useRouter()
+  function goToCreatePost() {
+  console.log('Creating post, going to /pages/PageSitePost16')
+  router.push('/pages/PageSite16')
+}
   const activeTab = ref('properties')
   </script>
   

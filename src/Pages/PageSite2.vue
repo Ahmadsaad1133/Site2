@@ -1,8 +1,8 @@
 <template>
-  <div class="pagesite2">
+  <div class="PageSite2">
     <div class="nav-icons">
       <div class="nav-group">
-        <img :src="NavigateLeft" class="nav-icon" />
+        <img :src="NavigateLeft" class="nav-icon" @click="navigateBack" />
         <img :src="NavigateRight" class="nav-icon" />
       </div>
       <div class="home-icon-container">
@@ -73,37 +73,87 @@
             </div>
           </div>
           <div class="genre-tags-row">
-            <span class="genre-pill genre-pill--large">Abstract</span>
-            <span class="genre-pill genre-pill--medium">Sci-fi</span>
-            <span class="genre-pill genre-pill--large">Fantasy</span>
-<button class="genre-add" @click="addGenre">
-  <span class="genre-add-icon">
-    <img :src="Add" class="Add-Icon" />
+  <span
+    class="genre-pill genre-pill--large"
+    :class="{
+      'active-pill': selectedPillIndex === 0
+    }"
+    @click="selectPill(0)"
+  >
+    Abstract
   </span>
-</button>
+  <span
+    class="genre-pill genre-pill--medium"
+    :class="{
+      'active-pill': selectedPillIndex === 1
+    }"
+    @click="selectPill(1)"
+  >
+    Sci-fi
+  </span>
+  <span
+    class="genre-pill genre-pill--large"
+    :class="{
+      'active-pill': selectedPillIndex === 2
+    }"
+    @click="selectPill(2)"
+  >
+    Fantasy
+  </span>
 
+  <button class="genre-add" @click="addGenre">
+    <span class="genre-add-icon">
+      <img :src="Add" class="Add-Icon" />
+    </span>
+  </button>
+</div>
 
-          </div>
         </div>
-<div class="section-block section-block--tight colors-section">
+        <div class="section-block section-block--tight colors-section">
   <label class="keyword-label">Colors</label>
   <div class="color-badges-row">
+    <button class="color-clear">
+      <img :src="XImg" alt="Clear" class="X-Icon" />
+    </button>
+    
+    <div 
+      class="color-badge blue" 
+      :class="{'selected-color': selectedColor === 'blue'}" 
+      @click="selectedColor = 'blue'"
+    ></div>
+    <div 
+      class="color-badge red" 
+      :class="{'selected-color': selectedColor === 'red'}" 
+      @click="selectedColor = 'red'"
+    ></div>
+    <div 
+      class="color-badge orange" 
+      :class="{'selected-color': selectedColor === 'orange'}" 
+      @click="selectedColor = 'orange'"
+    ></div>
+    <div 
+      class="color-badge pink" 
+      :class="{'selected-color': selectedColor === 'pink'}" 
+      @click="selectedColor = 'pink'"
+    ></div>
+    <div 
+      class="color-badge yellow" 
+      :class="{'selected-color': selectedColor === 'yellow'}" 
+      @click="selectedColor = 'yellow'"
+    ></div>
+    <div 
+      class="color-badge gray" 
+      :class="{'selected-color': selectedColor === 'gray'}" 
+      @click="selectedColor = 'gray'"
+    ></div>
+    
+    <div class="color-divider"></div>
+    <button class="color-add">
+      <img :src="AddImage" alt="Add" class="Add-Icon" />
+    </button>
+  </div>
+</div>
 
-            <button class="color-clear">
-              <img :src="XImg" alt="Clear" class="X-Icon" />
-            </button>
-            <div class="color-badge blue"></div>
-            <div class="color-badge red"></div>
-            <div class="color-badge orange"></div>
-            <div class="color-badge pink"></div>
-            <div class="color-badge yellow"></div>
-            <div class="color-badge gray"></div>
-            <div class="color-divider"></div>
-            <button class="color-add">
-              <img :src="AddImage" alt="Add" class="Add-Icon" />
-            </button>
-          </div>
-        </div>
 <div class="section-block sample-block">
   <label class="keyword-label">Sample</label>
   <div class="sample-dropzone">
@@ -119,7 +169,7 @@
     </div>
   </div>
 </div>
-        <button class="create-button">Create</button>
+<button class="create-button" @click="handleCreate">Create</button>
 
       </div>
     </div>
@@ -128,6 +178,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import NavigateLeft from '@/assets/NavigateLeft.png'
 import NavigateRight from '@/assets/NavigateRight.png'
 import Home from '@/assets/Home2.png'
@@ -141,7 +192,7 @@ import AddImage from '@/assets/AddImage.png'
 import Add from '@/assets/Add.png'
 import FolderImage from '@/assets/FolderImage.png'
 
-
+const router = useRouter()
 const activeTab = ref('properties')
 const selectedGenre = ref('')
 const genres = ref([])
@@ -151,6 +202,25 @@ const addGenre = () => {
     genres.value.push(selectedGenre.value)
   }
 }
+const navigateBack = () => {
+  router.push('/pages/PageSite1')
+}
+function handleCreate() {
+
+  alert('Create success')
+
+
+  router.push({ name: 'PageSite3' })
+}
+const selectedPillIndex = ref(null)
+
+const selectPill = (index) => {
+  selectedPillIndex.value = index
+}
+const selectedColor = ref(null);
+
+
+
 </script>
 
 <style scoped>
@@ -389,6 +459,7 @@ const addGenre = () => {
 
 .genre-label {
   font-family: 'Inter', sans-serif;
+  color: white;
   width: 459px;
   font-size: 14px;
 }
@@ -396,6 +467,7 @@ const addGenre = () => {
 .size-label {
   font-family: 'Inter', sans-serif;
   width: 153px;
+  color: white;
   font-size: 14px;
   text-align: left;
 }
@@ -462,6 +534,11 @@ const addGenre = () => {
   height: 100%;
   object-fit: contain;
 }
+.active-pill {
+  background-color: #111827; 
+  color: white;  
+}
+
 
 
 
@@ -552,12 +629,16 @@ background: #FACC15;
 .color-badge.gray {
 background: #6B7280;
 }
+.selected-color {
+  border: 2px solid white !important;
+}
 
 .color-divider {
 width: 1px;
 height: 33px;
 background: #374151;
 }
+
 
 .sample-dropzone {
   display: flex;

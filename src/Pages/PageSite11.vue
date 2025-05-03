@@ -2,7 +2,7 @@
     <div class="PageSite11">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="LeftArrow" class="nav-icon" />
+          <img :src="LeftArrow" class="nav-icon" @click="goToPageSite10"  style="cursor: pointer;"/>
           <img :src="NavigateRight" class="nav-icon" />
         </div>
         <div class="home-icon-container">
@@ -49,11 +49,11 @@
           </div>
         </div>
         <div class="success-buttons">
-          <button class="btn-primary">
+          <button class="btn-primary" @click.prevent="handleDownload">
             <img :src="DownArrow" alt="Download icon" class="btn-icon" />
             Download
           </button>
-          <button class="btn-secondary">
+          <button class="btn-secondary" @click.prevent="goToCreatePost">
             <img :src="BlackAdd" alt="Create post icon" class="btn-icon" />
             Create post
           </button>
@@ -72,7 +72,8 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
+    import { ref } from 'vue'
   import LeftArrow from '@/assets/LeftArrow.png'
   import NavigateRight from '@/assets/NavigateRight.png'
   import Home from '@/assets/Home2.png'
@@ -87,8 +88,19 @@
   import Discord2 from '@/assets/Discord2.png'
   import Dribbble2 from '@/assets/Dribbble2.png'
   import LinkedIn2 from '@/assets/LinkedIn2.png'
-  
+
+  const router = useRouter()
   const activeTab = ref('properties')
+  function goToPageSite10() {
+  router.push('/pages/PageSite10')
+}
+  function handleDownload() {
+  alert('Download done')
+  router.push('/pages/PageSite12')
+}
+function goToCreatePost() {
+  alert('Post Created Bro , and ? what r u looking at , its just message')
+}
   </script>
   
   <style scoped>

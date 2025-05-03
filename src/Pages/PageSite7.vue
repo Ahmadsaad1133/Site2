@@ -2,7 +2,8 @@
     <div class="page-site7">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="NavigateLeft" class="nav-icon" />
+          <img :src="NavigateLeft" class="nav-icon"
+          @click="goToPageSite6" style="cursor: pointer;" />
           <img :src="NavigateRight" class="nav-icon" />
         </div>
         <div class="home-icon-container">
@@ -47,11 +48,11 @@
           </div>
         </div>
         <div class="success-buttons">
-          <button class="btn-primary">
+          <button class="btn-primary" @click.prevent="handleDownload">
             <img :src="DownArrow" alt="Download icon" class="btn-icon" />
             تحميل
           </button>
-          <button class="btn-secondary">
+          <button class="btn-secondary"  @click.prevent="goToCreatePost">
             <img :src="PlusImage" alt="Create post icon" class="btn-icon" />
             إنشاء منشور
           </button>
@@ -70,6 +71,7 @@
   
   <script setup>
   import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
   import NavigateLeft from '@/assets/NavigateLeft.png'
   import NavigateRight from '@/assets/NavigateRight.png'
   import Home from '@/assets/Home2.png'
@@ -85,7 +87,18 @@
   import Dribbble from '@/assets/Dribbble.png'
   import Linkedln from '@/assets/Linkedln.png'
   
+  function handleDownload() {
+  alert('Download done')
+}
   const activeTab = ref('properties')
+  const router = useRouter()
+  function goToCreatePost() {
+  console.log('Creating post, going to /pages/PageSitePost8')
+  router.push('/pages/PageSite8')
+}
+function goToPageSite6() {
+  router.push('/pages/PageSite6')
+}
   </script>
   
   <style scoped>

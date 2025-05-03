@@ -7,32 +7,25 @@
     <input type="text" placeholder="Search" class="search-input" />
   </div>
 </div>
-
-
-
-
-      <!-- Profile Widget -->
       <div class="profile-widget">
-        <!-- Profile Picture -->
         <div class="profile-pic">
           <img src="https://i.pravatar.cc/40" alt="User" class="avatar" />
         </div>
 
-        <!-- Name + Company + Icons -->
+ 
         <div class="info-and-icons">
           <div class="user-info">
             <p class="name">Nicholas Turner</p>
             <p class="company">SaaS Blocks LLC</p>
           </div>
 
-          <!-- Arrow and Bell Icons Container -->
           <div class="icons-group">
-            <!-- Arrow -->
+
             <div class="arrow-container">
               <img :src="arrowIcon" alt="Arrow" class="arrow-icon" />
             </div>
 
-            <!-- Bell -->
+
             <div class="bell-container">
               <img :src="bellIcon" alt="Bell Icon" class="bell-icon" />
             </div>
@@ -42,7 +35,7 @@
     </div>
     <div class="custom-divider-line"></div>
     
-    <!-- Bottom Row -->
+
     <div class="bottom-row">
       <div class="categories">
         <button
@@ -59,7 +52,7 @@
           <img :src="addIcon" alt="Add" class="add-icon" />
         </button>
       </div>
-<!-- Filter Button -->
+
 <button class="filter-btn">
   <img :src="filterIcon" alt="Filter Icon" class="filter-icon" />
   <span class="filter-text">Filter</span>
@@ -94,9 +87,9 @@ const searchIcon = require('@/assets/Search.png')
 </script>
 
 <style scoped>
-/* For views and likes numbers */
+
 .view-count, .like-count {
-  color: #9CA3AF; /* اللون المطلوب */
+  color: #9CA3AF;
 }
 
 .header {
@@ -106,7 +99,7 @@ const searchIcon = require('@/assets/Search.png')
   padding: 16px 24px;
   padding-left: 72px;
   padding-right: 72px;
-  background-color: #111827; /* Background color for the header */
+  background-color: #111827; 
   color: white;
 }
 
@@ -116,14 +109,14 @@ const searchIcon = require('@/assets/Search.png')
   justify-content: space-between;
   align-items: center;
   padding-top: 32px;
-  position: relative; /* ضروري */
-  padding-bottom: 8px; /* عشان في space للخط */
+  position: relative; 
+  padding-bottom: 8px; 
 }
 
 .custom-divider-line {
   height: 1px;
   background-color: rgba(55, 65, 81, 1);
-  margin: 16px 0; /* مسافة 16px من فوق وتحت */
+  margin: 16px 0;
 }
 
 .search-wrapper {
@@ -131,20 +124,20 @@ const searchIcon = require('@/assets/Search.png')
   border-radius: 12px;
   width: 260px;
   height: 44px;
-  border: 2px solid #6b7280; /* gray border */
+  border: 2px solid #6b7280;
   display: flex;
   align-items: center;
   padding: 0 12px;
 }
 .search-input::placeholder {
   color: white;
-  opacity: 1; /* تأكد إنو اللون ما يكون شفاف */
+  opacity: 1;
 }
 
 .search-widget {
   display: flex;
   align-items: center;
-  gap: 9px; /* المسافة بين الصورة والنص */
+  gap: 9px; 
   width: 100%;
 }
 
@@ -159,12 +152,12 @@ const searchIcon = require('@/assets/Search.png')
   color: white;
   font-size: 14px;
   line-height: 20px;
-  padding-top: 2px; /* slight padding to align with icon */
+  padding-top: 2px; 
   flex: 1;
   outline: none;
 }
 
-/* Profile Widget */
+
 .profile-widget {
   display: flex;
   align-items: center;
@@ -207,14 +200,14 @@ const searchIcon = require('@/assets/Search.png')
   font-size: 14px;
 }
 
-/* Icons beside the text */
+
 .icons-group {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* Arrow */
+
 .arrow-container {
   display: flex;
   justify-content: center;
@@ -226,7 +219,7 @@ const searchIcon = require('@/assets/Search.png')
   height: 16px;
 }
 
-/* Bell */
+
 .bell-container {
   padding: 12px;
   border: 2px solid #374151;
@@ -241,7 +234,7 @@ const searchIcon = require('@/assets/Search.png')
   height: 24px;
 }
 
-/* Bottom Row */
+
 .bottom-row {
   display: flex;
   justify-content: space-between;
@@ -295,7 +288,7 @@ const searchIcon = require('@/assets/Search.png')
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #111827; /* Match header background */
+  background-color: #111827; 
   border: 1px solid #374151;
   border-radius: 12px;
   padding: 0 12px;

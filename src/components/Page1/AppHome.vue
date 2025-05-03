@@ -2,9 +2,15 @@
   <div class="main-container">
     <div class="gallery-wrapper">
       <div class="gallery">
-        <div class="gallery-column" v-for="(column, i) in columns" :key="i">
-          <div class="gallery-card" v-for="(card, index) in column" :key="index">
-            <img :src="card.image" class="card-image" />
+        <div class="gallery-column" v-for="(column, colIndex) in columns" :key="colIndex">
+          <div
+            class="gallery-card"
+            v-for="(card, cardIndex) in column"
+            :key="cardIndex"
+          >
+          <router-link to="/pages/PageSite2">
+              <img :src="card.image" class="card-image" />
+            </router-link>
             <div class="card-info">
               <div class="user">
                 <div class="profile">
@@ -24,10 +30,10 @@
               </div>
             </div>
           </div>
-        </div> <!-- end gallery-column -->
-      </div> <!-- end gallery -->
-    </div> <!-- end gallery-wrapper -->
-  </div> <!-- end main-container -->
+        </div> 
+      </div> 
+    </div> 
+  </div> 
 </template>
 
 <script setup>
@@ -59,16 +65,15 @@ const cards = [
   { image: Card11, avatar: 'https://i.pravatar.cc/30?u=11', username: 'David Sky', likes: 37, views: 53 }
 ]
 
-// Initialize columns
-const columns = [[], [], [], []]
 
+const columns = [[], [], [], []]
 cards.forEach((card, index) => {
   if (index === 8) {
-    columns[1].push(card) // Card9 → column 2
+    columns[1].push(card)
   } else if (index === 9) {
-    columns[2].push(card) // Card10 → column 3
+    columns[2].push(card)
   } else if (index === 10) {
-    columns[3].push(card) // Card11 → column 4
+    columns[3].push(card)
   } else {
     const colIndex = index % 4
     columns[colIndex].push(card)

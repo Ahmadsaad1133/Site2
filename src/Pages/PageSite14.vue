@@ -138,7 +138,7 @@
   </div>
   
       
-          <button class="create-button">إنشاء</button>
+          <button class="create-button" @click="handleCreate" >إنشاء</button>
   
         </div>
       </div>
@@ -146,7 +146,7 @@
   </template>
   
   <script setup>
-  
+   import { useRouter } from 'vue-router'
   import { ref } from 'vue'
   import NavigateRight from '@/assets/NavigateRight.png'
     import LeftArrow from '@/assets/LeftArrow.png'
@@ -161,7 +161,7 @@
   import Add from '@/assets/Add.png'
   import Folder25 from '@/assets/Folder25.png'
   
-  
+  const router = useRouter()
   const activeTab = ref('خصائص')
   const selectedGenre = ref('')
   const genres = ref([])
@@ -171,6 +171,13 @@
       genres.value.push(selectedGenre.value)
     }
   }
+  function handleCreate() {
+
+  alert('Create success')
+
+
+  router.push({ name: 'PageSite15' })
+}
   </script>
   
   <style scoped>

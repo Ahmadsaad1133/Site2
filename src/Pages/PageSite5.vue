@@ -2,9 +2,9 @@
   <div class="PageSite5">
     <div class="first-row"></div>
     <div class="container-full">
+  
       <div class="main-content">
         <div class="content-column">
-
           <div class="header-row">
             <div class="bell-container">
               <img :src="bellIcon" alt="إشعار" class="bell-icon" />
@@ -20,7 +20,10 @@
               <input type="search" class="search-bar" placeholder="ابحث..." />
             </div>
           </div>
+
           <div class="header-divider" :style="dividerStyle"></div>
+
+
           <div class="main-row">
             <div class="filter-row">
               <div class="custom-container">
@@ -30,37 +33,56 @@
               </div>
               <div class="secondary-container">
                 <div class="item-row">
-                  <div class="item-container large-item1">
+                  <div
+                    class="item-container large-item1"
+                    :class="{ 'active-pill': activeIndex === 0 }"
+                    @click="setActiveIndex(0)"
+                  >
                     <img :src="addImage" alt="Add Item" class="add-icon" />
                   </div>
-                  <div class="item-container large-item2">
+
+                  <div
+                    class="item-container large-item2"
+                    :class="{ 'active-pill': activeIndex === 1 }"
+                    @click="setActiveIndex(1)"
+                  >
                     <span class="item-text">الملخص</span>
                   </div>
-                  <div class="item-container large-item3">
+
+                  <div
+                    class="item-container large-item3"
+                    :class="{ 'active-pill': activeIndex === 2 }"
+                    @click="setActiveIndex(2)"
+                  >
                     <span class="item-text">خيال علمي</span>
                   </div>
-                  <div class="item-container large-item4">
+
+                  <div
+                    class="item-container large-item4"
+                    :class="{ 'active-pill': activeIndex === 3 }"
+                    @click="setActiveIndex(3)"
+                  >
                     <span class="item-text">الملخص</span>
                   </div>
-                  <div class="item-container large-item5">
+
+                  <div
+                    class="item-container large-item5"
+                    :class="{ 'active-pill': activeIndex === 4 }"
+                    @click="setActiveIndex(4)"
+                  >
                     <span class="item-text">اكتشاف</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+
           <div class="main-container">
             <div class="gallery">
-              <div
-                class="gallery-column"
-                v-for="(column, i) in columns"
-                :key="i"
-              >
-                <div
-                  class="gallery-card"
-                  v-for="(card, idx) in column"
-                  :key="idx"
-                >
+              <div class="gallery-column" v-for="(column, i) in columns" :key="i">
+                <div class="gallery-card" v-for="(card, idx) in column" :key="idx"
+                 @click="router.push({ name: 'PageSite6' })">
                   <img :src="card.image" class="card-image" />
                   <div class="card-info">
                     <div class="user">
@@ -84,64 +106,105 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
+
+
       <div class="sidebar">
         <div class="sidebar-column">
+
+
           <div class="sidebar-header-row">
             <img :src="iconImage" alt="App Icon" class="header-icon" />
             <img :src="logoImage" alt="Chain Logo" class="header-img" />
           </div>
+
+
           <div class="sidebar-button-row">
-            <button class="sidebar-create-btn">
+            <button class="sidebar-create-btn" @click="handleCreate">
               <img :src="starIcon" alt="Star Icon" class="star-icon" />
               <span class="button-text">اصنع</span>
             </button>
           </div>
+
           <div class="sidebar-menu">
-            <div class="menu-item active">
+            <div
+              :class="['menu-item', { active: activeMenuItem === 'home' }]"
+              @click="setActiveMenu('home')"
+            >
               <div class="menu-item-container">
                 <img :src="notification" alt="Notification" class="notification-icon" />
                 <span class="menu-text">الرئيسية</span>
                 <img :src="homeIcon" alt="Home" class="menu-icon" />
               </div>
             </div>
-            <div class="menu-item">
+
+            <div
+              :class="['menu-item', { active: activeMenuItem === 'group' }]"
+              @click="setActiveMenu('group')"
+            >
               <div class="menu-item-container">
                 <span class="menu-text">المجموعة</span>
-                <img :src="folderIcon" alt="Folder" class="menu-icon" />
+                <img :src="folderIcon" alt="Group" class="menu-icon" />
               </div>
             </div>
-            <div class="menu-item">
+
+            <div
+              :class="['menu-item', { active: activeMenuItem === 'downloads' }]"
+              @click="setActiveMenu('downloads')"
+            >
               <div class="menu-item-container">
                 <span class="menu-text">التحميلات</span>
                 <img :src="downloadsIcon" alt="Downloads" class="menu-icon" />
               </div>
             </div>
-            <div class="menu-item">
+
+            <div
+              :class="['menu-item', { active: activeMenuItem === 'chat' }]"
+              @click="setActiveMenu('chat')"
+            >
               <div class="menu-item-container">
                 <span class="menu-text">محادثة</span>
                 <img :src="chatIcon" alt="Chat" class="menu-icon" />
               </div>
             </div>
-            <div class="menu-item">
+
+            <div
+              :class="['menu-item', { active: activeMenuItem === 'history' }]"
+              @click="setActiveMenu('history')"
+            >
               <div class="menu-item-container">
                 <span class="menu-text">التاريخ</span>
                 <img :src="historyIcon" alt="History" class="menu-icon" />
               </div>
             </div>
           </div>
+
           <div class="sidebar-bottom-container">
-  <div class="bottom-actions">
-    <div class="settings-row">
-      <span class="bottom-text">إعدادات</span>
-      <img :src="settingsIcon" alt="Settings" class="bottom-icon" />
-    </div>
-    <div class="logout-row">
-      <span class="bottom-text">خروج</span>
-      <img :src="logoutIcon" alt="Logout" class="bottom-icon" />
-    </div>
-  </div>
+            <div class="language-column">
+              <p class="language-text">Language</p>
+              <div class="language-toggle">
+                <div class="toggle-container">
+                  <label class="switch">
+                    <input type="checkbox" v-model="isEnglish" @change="handleLanguageToggle" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="bottom-actions">
+              <div class="settings-row">
+                <span class="bottom-text">إعدادات</span>
+                <img :src="settingsIcon" alt="Settings" class="bottom-icon" />
+              </div>
+              <div class="logout-row">
+                <span class="bottom-text">خروج</span>
+                <img :src="logoutIcon" alt="Logout" class="bottom-icon" />
+              </div>
+            </div>
+
             <div class="switcher-row">
               <div class="theme-switcher">
                 <div
@@ -174,7 +237,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+
+// Images
 import iconImage from '@/assets/Icon.png'
 import logoImage from '@/assets/Chain.png'
 import starIcon from '@/assets/Star1.png'
@@ -209,8 +275,29 @@ import Card11 from '@/assets/Card11.png'
 import notification from '@/assets/Notification.png'
 
 
+const router = useRouter()
+const isDark = ref(true)
 const theme = ref('dark')
-const toggleTheme = t => { theme.value = t }
+const isEnglish = ref(true)
+const activeMenuItem = ref('home') 
+
+
+const activeIndex = ref(null)
+const setActiveIndex = (i) => {
+  activeIndex.value = i
+}
+
+
+const handleCreate = () => {
+  alert('تم الضغط على زر الصنع!')
+}
+
+
+watch(isDark, (newVal) => {
+  document.body.classList.toggle('dark-theme', newVal)
+  document.body.classList.toggle('light-theme', !newVal)
+})
+
 
 const cards = [
   { image: Card1, avatar: 'https://i.pravatar.cc/30?u=1', username: 'Nicholas Turner', likes: 24, views: 42 },
@@ -226,13 +313,26 @@ const cards = [
   { image: Card11, avatar: 'https://i.pravatar.cc/30?u=11', username: 'David Sky', likes: 37, views: 53 }
 ]
 
+
 const columns = [[], [], [], []]
 cards.forEach((card, idx) => {
   columns[idx % 4].push(card)
 })
 
+
 const dividerStyle = ref({})
 const galleryStyle = ref({})
+
+
+const setActiveMenu = (menu) => {
+  activeMenuItem.value = menu
+}
+
+
+const handleLanguageToggle = () => {
+  router.push({ name: 'PageSite1' })
+}
+
 
 onMounted(() => {
   const bellEl = document.querySelector('.bell-container')
@@ -256,12 +356,25 @@ onMounted(() => {
       width: `${searchRect.right - bellRect.left}px`
     }
   }
+  router.push({ name: 'PageSite5' })
 })
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+
+.item-container {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.item-container.active-pill {
+  background-color: #252A41;
+  border-color: transparent;
+}
+
+
 .ImageGenerator2 {
   position: fixed;
   inset: 0;
@@ -406,11 +519,16 @@ onMounted(() => {
 .item-container {
   height: 36px;
   border-radius: 32px;
+  cursor: pointer;
   border: 2px solid #374151;
   background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.item-container.active-pill {
+  background-color: #252A41;
+  border-color: transparent;
 }
 .large-item1 { width: 52px; }
 .large-item2 { width: 75px; }
@@ -529,7 +647,6 @@ onMounted(() => {
   height: 16px;
 }
 
-/* Sidebar */
 .sidebar {
   position: fixed;
   top: 0;
@@ -621,6 +738,81 @@ onMounted(() => {
   flex-direction: column;
   gap: 32px;
 }
+.language-column {
+  display: flex;
+  padding-left: 50px;
+  flex-direction: column; 
+  justify-content: space-between; 
+  width: 100%;
+  height: 80px; 
+}
+
+.language-text {
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: white;
+  text-align: center;
+  margin-bottom: 8px; 
+}
+
+.language-toggle {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.toggle-container {
+  width: 120px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.switch {
+  position: relative;
+  cursor: pointer; 
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  border-radius: 50px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
 
 .settings-row,
 .logout-row {
