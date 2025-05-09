@@ -33,7 +33,7 @@
             @click="activeTab = 'المعلومات'"
           >المعلومات</div>
         </div>
-        <img :src="DarkButton2" class="dark-button" />
+        <img :src="Darkbutton" class="dark-button" />
       </div>
   
       
@@ -148,18 +148,18 @@
   <script setup>
    import { useRouter } from 'vue-router'
   import { ref } from 'vue'
-  import NavigateRight from '@/assets/NavigateRight.png'
-    import LeftArrow from '@/assets/LeftArrow.png'
-  import RightArrow from '@/assets/RightArrow.png'
-  import Home from '@/assets/Home2.png'
-  import Star3 from '@/assets/Star3.png'
-  import Image12 from '@/assets/Image12.png'
-  import DarkButton2 from '@/assets/DarkButton2.png'
-  import Arrow from '@/assets/Arrow.png'
-  import XImg from '@/assets/XImg.png'
-  import AddImage from '@/assets/AddImage.png'
-  import Add from '@/assets/Add.png'
-  import Folder25 from '@/assets/Folder25.png'
+  import NavigateRight from '@/assets/Navigation-right.svg'
+    import LeftArrow from '@/assets/Left-arrow.svg'
+  import RightArrow from '@/assets/Right-arrow.svg'
+  import Home from '@/assets/Home.svg'
+  import Star3 from '@/assets/Star.svg'
+  import Image12 from '@/assets/Image-12.png'
+  import Darkbutton from '@/assets/Dark-button.svg'
+  import Arrow from '@/assets/Arrow.svg'
+  import XImg from '@/assets/XImg.svg'
+  import AddImage from '@/assets/Add.svg'
+  import Add from '@/assets/Add.svg'
+  import Folder25 from '@/assets/Folder.svg'
   
   const router = useRouter()
   const activeTab = ref('خصائص')

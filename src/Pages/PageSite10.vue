@@ -32,7 +32,7 @@
             @click="activeTab = 'info'"
           >Info</div>
         </div>
-        <img :src="DarkButton2" class="dark-button" />
+        <img :src="Darkbutton" class="dark-button" />
       </div>
       <div class="keyword-text-input-container">
         <div class="inner-container">
@@ -172,18 +172,18 @@
   <script setup>
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
-  import LeftArrow from '@/assets/LeftArrow.png'
-  import NavigateRight from '@/assets/NavigateRight.png'
-  import Home from '@/assets/Home2.png'
-  import Star3 from '@/assets/Star3.png'
-  import BlueBackground2 from '@/assets/BlueBackground2.png'
-  import MidImg from '@/assets/MidImg.png'
-  import DarkButton2 from '@/assets/DarkButton2.png'
-  import Arrow from '@/assets/Arrow.png'
-  import XImg from '@/assets/XImg.png'
-  import BlackAdd from '@/assets/BlackAdd.png'
-  import Add from '@/assets/Add.png'
-  import Folder25 from '@/assets/Folder25.png'
+  import LeftArrow from '@/assets/Left-arrow.svg'
+  import NavigateRight from '@/assets/Navigation-right.svg'
+  import Home from '@/assets/Home.svg'
+  import Star3 from '@/assets/Star.svg'
+  import BlueBackground2 from '@/assets/Blue-background-2.webp'
+  import MidImg from '@/assets/Mid-img.webp'
+  import Darkbutton from '@/assets/Dark-button.svg'
+  import Arrow from '@/assets/Arrow.svg'
+  import XImg from '@/assets/XImg.svg'
+  import BlackAdd from '@/assets/Black-add.svg'
+  import Add from '@/assets/Add.svg'
+  import Folder25 from '@/assets/Folder.svg'
   
   const router = useRouter()
   const activeTab = ref('properties')

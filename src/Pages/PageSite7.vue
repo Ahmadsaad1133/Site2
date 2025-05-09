@@ -2,20 +2,20 @@
     <div class="page-site7">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="NavigateLeft" class="nav-icon"
+          <img :src="Navigateleft" class="nav-icon"
           @click="goToPageSite6" style="cursor: pointer;" />
-          <img :src="NavigateRight" class="nav-icon" />
+          <img :src="Navigateright" class="nav-icon" />
         </div>
         <div class="home-icon-container">
           <img :src="Home" class="home-icon" />
           <span class="home-text">الصفحة الرئيسية</span>
-          <img :src="NavigateRight" class="small-nav-icon" />
-          <img :src="Star" class="star-icon" />
+          <img :src="Navigateright" class="small-nav-icon" />
+          <img :src="Staricon" class="star-icon" />
           <span class="create-text">إنشاء</span>
         </div>
       </div>
       <div class="Paint-Image-container">
-        <img :src="PaintImage" class="Paint-Image" />
+        <img :src="Paintimage" class="Paint-Image" />
       </div>
       <div class="properties-info-row">
         <div class="properties-info-switch">
@@ -34,11 +34,11 @@
           المعلومات
           </div>
         </div>
-        <img :src="ButtonDark" class="dark-button" />
+        <img :src="Buttondark" class="dark-button" />
       </div>
 
       <div class="success-container">
-        <img :src="SuccessImage" alt="Success" class="success-image" />
+        <img :src="Successimage" alt="Success" class="success-image" />
         <div class="success-texts-column">
           <div class="success-text-row">
             <p class="success-title">هذا نجاح إنشاء</p>
@@ -49,11 +49,11 @@
         </div>
         <div class="success-buttons">
           <button class="btn-primary" @click.prevent="handleDownload">
-            <img :src="DownArrow" alt="Download icon" class="btn-icon" />
+            <img :src="Downarrow" alt="Download icon" class="btn-icon" />
             تحميل
           </button>
           <button class="btn-secondary"  @click.prevent="goToCreatePost">
-            <img :src="PlusImage" alt="Create post icon" class="btn-icon" />
+            <img :src="Plusimage" alt="Create post icon" class="btn-icon" />
             إنشاء منشور
           </button>
         </div>
@@ -72,20 +72,20 @@
   <script setup>
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
-  import NavigateLeft from '@/assets/NavigateLeft.png'
-  import NavigateRight from '@/assets/NavigateRight.png'
-  import Home from '@/assets/Home2.png'
-  import Star from '@/assets/Star1.png'
-  import ButtonDark from '@/assets/ButtonDark.png'
-  import PaintImage from '@/assets/PaintImage.png'
-  import SuccessImage from '@/assets/SuccessImage.png'
-  import DownArrow from '@/assets/DownArrow.png'
-  import PlusImage from '@/assets/PlusImage.png'
-  import Insta from '@/assets/Insta.png'
-  import Twitter from '@/assets/Twitter.png'
-  import Discord from '@/assets/Discord.png'
-  import Dribbble from '@/assets/Dribbble.png'
-  import Linkedln from '@/assets/Linkedln.png'
+  import Navigateleft from '@/assets/Navigate-left.svg'
+  import Navigateright from '@/assets/Navigation-right.svg'
+  import Home from '@/assets/Home.svg'
+  import Staricon from '@/assets/Star.svg'
+  import Buttondark from '@/assets/Button-dark.svg'
+  import Paintimage from '@/assets/Paint-image.png'
+  import Successimage from '@/assets/Success-image.png'
+  import Downarrow from '@/assets/Down-arrow.svg'
+  import Plusimage from '@/assets/Plus-image.svg'
+  import Insta from '@/assets/Insta.svg'
+  import Twitter from '@/assets/Twitter.svg'
+  import Discord from '@/assets/Discord.svg'
+  import Dribbble from '@/assets/Dribbble.svg'
+  import Linkedln from '@/assets/Linkedln.svg'
   
   function handleDownload() {
   alert('Download done')

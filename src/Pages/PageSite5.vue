@@ -7,8 +7,8 @@
         <div class="content-column">
           <div class="header-row">
             <div class="bell-container">
-              <img :src="bellIcon" alt="إشعار" class="bell-icon" />
-              <img :src="ProfileImage" alt="ملف شخصي" class="profile-icon" />
+              <img :src="bellicon" alt="إشعار" class="bell-icon" />
+              <img :src="Profileimage" alt="ملف شخصي" class="profile-icon" />
               <div class="user-info">
                 <div class="user-name">Nicholas Turner</div>
                 <div class="user-company">SaaS Blocks LLC</div>
@@ -16,7 +16,7 @@
               <img :src="arrowIcon" alt="Arrow" class="arrow-icon" />
             </div>
             <div class="search-container">
-              <img :src="searchIcon" alt="بحث" class="search-icon" />
+              <img :src="searchicon" alt="بحث" class="search-icon" />
               <input type="search" class="search-bar" placeholder="ابحث..." />
             </div>
           </div>
@@ -27,9 +27,9 @@
           <div class="main-row">
             <div class="filter-row">
               <div class="custom-container">
-                <img :src="arrowIcon" alt="Arrow" class="custom-arrow-icon" />
+                <img :src="arrowicon" alt="Arrow" class="custom-arrow-icon" />
                 <span class="filter-text">فیلتر</span>
-                <img :src="filterIcon" alt="فلتر" class="filter-icon" />
+                <img :src="filtericon" alt="فلتر" class="filter-icon" />
               </div>
               <div class="secondary-container">
                 <div class="item-row">
@@ -38,7 +38,7 @@
                     :class="{ 'active-pill': activeIndex === 0 }"
                     @click="setActiveIndex(0)"
                   >
-                    <img :src="addImage" alt="Add Item" class="add-icon" />
+                    <img :src="addimage" alt="Add Item" class="add-icon" />
                   </div>
 
                   <div
@@ -92,11 +92,11 @@
                       </div>
                       <div class="icons">
                         <div class="icon-group">
-                          <img :src="heartIcon" class="icon" />
+                          <img :src="hearticon" class="icon" />
                           <span>{{ card.likes }}</span>
                         </div>
                         <div class="icon-group">
-                          <img :src="eyeIcon" class="icon" />
+                          <img :src="eyeicon" class="icon" />
                           <span>{{ card.views }}</span>
                         </div>
                       </div>
@@ -116,14 +116,14 @@
 
 
           <div class="sidebar-header-row">
-            <img :src="iconImage" alt="App Icon" class="header-icon" />
-            <img :src="logoImage" alt="Chain Logo" class="header-img" />
+            <img :src="iconimage" alt="App Icon" class="header-icon" />
+            <img :src="logoimage" alt="Chain Logo" class="header-img" />
           </div>
 
 
           <div class="sidebar-button-row">
             <button class="sidebar-create-btn" @click="handleCreate">
-              <img :src="starIcon" alt="Star Icon" class="star-icon" />
+              <img :src="staricon" alt="Star Icon" class="star-icon" />
               <span class="button-text">اصنع</span>
             </button>
           </div>
@@ -136,7 +136,7 @@
               <div class="menu-item-container">
                 <img :src="notification" alt="Notification" class="notification-icon" />
                 <span class="menu-text">الرئيسية</span>
-                <img :src="homeIcon" alt="Home" class="menu-icon" />
+                <img :src="homeicon" alt="Home" class="menu-icon" />
               </div>
             </div>
 
@@ -146,7 +146,7 @@
             >
               <div class="menu-item-container">
                 <span class="menu-text">المجموعة</span>
-                <img :src="folderIcon" alt="Group" class="menu-icon" />
+                <img :src="foldericon" alt="Group" class="menu-icon" />
               </div>
             </div>
 
@@ -156,7 +156,7 @@
             >
               <div class="menu-item-container">
                 <span class="menu-text">التحميلات</span>
-                <img :src="downloadsIcon" alt="Downloads" class="menu-icon" />
+                <img :src="downloadsicon" alt="Downloads" class="menu-icon" />
               </div>
             </div>
 
@@ -166,7 +166,7 @@
             >
               <div class="menu-item-container">
                 <span class="menu-text">محادثة</span>
-                <img :src="chatIcon" alt="Chat" class="menu-icon" />
+                <img :src="chaticon" alt="Chat" class="menu-icon" />
               </div>
             </div>
 
@@ -176,7 +176,7 @@
             >
               <div class="menu-item-container">
                 <span class="menu-text">التاريخ</span>
-                <img :src="historyIcon" alt="History" class="menu-icon" />
+                <img :src="historyicon" alt="History" class="menu-icon" />
               </div>
             </div>
           </div>
@@ -197,11 +197,11 @@
             <div class="bottom-actions">
               <div class="settings-row">
                 <span class="bottom-text">إعدادات</span>
-                <img :src="settingsIcon" alt="Settings" class="bottom-icon" />
+                <img :src="settingsicon" alt="Settings" class="bottom-icon" />
               </div>
               <div class="logout-row">
                 <span class="bottom-text">خروج</span>
-                <img :src="logoutIcon" alt="Logout" class="bottom-icon" />
+                <img :src="logouticon" alt="Logout" class="bottom-icon" />
               </div>
             </div>
 
@@ -214,7 +214,7 @@
                 >
                   <span class="toggle-text">ضوء</span>
                   <img
-                    :src="lightIcon"
+                    :src="lighticon"
                     alt="Light Icon"
                     class="toggle-icon"
                   />
@@ -225,7 +225,7 @@
                   @click="toggleTheme('dark')"
                 >
                   <span class="toggle-text">مظلم</span>
-                  <img :src="darkIcon" alt="Dark Icon" class="toggle-icon" />
+                  <img :src="darkicon" alt="Dark Icon" class="toggle-icon" />
                 </div>
               </div>
             </div>
@@ -241,38 +241,38 @@ import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 // Images
-import iconImage from '@/assets/Icon.png'
-import logoImage from '@/assets/Chain.png'
-import starIcon from '@/assets/Star1.png'
-import homeIcon from '@/assets/Home.png'
-import folderIcon from '@/assets/Folder2.png'
-import downloadsIcon from '@/assets/Downloads.png'
-import chatIcon from '@/assets/Chat.png'
-import historyIcon from '@/assets/History.png'
-import settingsIcon from '@/assets/Settings.png'
-import logoutIcon from '@/assets/Logout.png'
-import darkIcon from '@/assets/DarkIcon.png'
-import lightIcon from '@/assets/LightIcon.png'
-import searchIcon from '@/assets/Search.png'
-import bellIcon from '@/assets/BellImage.png'
-import ProfileImage from '@/assets/ProfileImage.png'
-import arrowIcon from '@/assets/Arrow.png'
-import filterIcon from '@/assets/Filter.png'
-import addImage from '@/assets/AddImage.png'
-import heartIcon from '@/assets/Heart-Icon.png'
-import eyeIcon from '@/assets/Eye-Icon.png'
-import Card1 from '@/assets/Card1.png'
-import Card2 from '@/assets/Card2.png'
-import Card3 from '@/assets/Card3.png'
-import Card4 from '@/assets/Card4.png'
-import Card5 from '@/assets/Card5.png'
-import Card6 from '@/assets/Card6.png'
-import Card7 from '@/assets/Card7.png'
-import Card8 from '@/assets/Card8.png'
-import Card9 from '@/assets/Card9.png'
-import Card10 from '@/assets/Card10.png'
-import Card11 from '@/assets/Card11.png'
-import notification from '@/assets/Notification.png'
+import iconimage from '@/assets/Icon.svg'
+import logoimage from '@/assets/Chain.png'
+import staricon from '@/assets/Star.svg'
+import homeicon from '@/assets/Home.svg'
+import foldericon from '@/assets/Folder.svg'
+import downloadsicon from '@/assets/Downloads.svg'
+import chaticon from '@/assets/Chat.svg'
+import historyicon from '@/assets/History.svg'
+import settingsicon from '@/assets/Settings.svg'
+import logouticon from '@/assets/Logout.svg'
+import darkicon from '@/assets/Dark-icon-2.svg'
+import lighticon from '@/assets/Light-icon-2.svg'
+import searchicon from '@/assets/Search.svg'
+import bellicon from '@/assets/Bell-image.svg'
+import Profileimage from '@/assets/Profile-image.svg'
+import arrowicon from '@/assets/Arrow.svg'
+import filtericon from '@/assets/Filter.svg'
+import addimage from '@/assets/Add.svg'
+import hearticon from '@/assets/Heart-Icon.svg'
+import eyeicon from '@/assets/Eye-icon.svg'
+import Card1 from '@/assets/Card-1.webp'
+import Card2 from '@/assets/Card-2.webp'
+import Card3 from '@/assets/Card-3.webp'
+import Card4 from '@/assets/Card-4.webp'
+import Card5 from '@/assets/Card-5.webp'
+import Card6 from '@/assets/Card-6.webp'
+import Card7 from '@/assets/Card-7.webp'
+import Card8 from '@/assets/Card-8.webp'
+import Card9 from '@/assets/Card-9.webp'
+import Card10 from '@/assets/Card-10.webp'
+import Card11 from '@/assets/Card-11.webp'
+import notification from '@/assets/Notification.svg'
 
 
 const router = useRouter()

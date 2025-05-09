@@ -33,7 +33,7 @@
           المعلومات
           </div>
         </div>
-        <img :src="DarkButton2" class="dark-button" />
+        <img :src="Darkbutton" class="dark-button" />
       </div>
 
       <div class="success-container">
@@ -71,20 +71,20 @@
   <script setup>
     import { useRouter } from 'vue-router'
   import { ref } from 'vue'
-  import LeftArrow from '@/assets/LeftArrow.png'
-  import NavigateRight from '@/assets/NavigateRight.png'
-  import Home from '@/assets/Home2.png'
-  import Star3 from '@/assets/Star3.png'
-  import DarkButton2 from '@/assets/DarkButton2.png'
-  import PaintImage from '@/assets/PaintImage.png'
-  import SuccessLogo from '@/assets/SuccessLogo.png'
-  import DownArrow from '@/assets/DownArrow.png'
-  import PlusImage from '@/assets/PlusImage.png'
-  import Insta2 from '@/assets/Insta2.png'
-  import Twitter2 from '@/assets/Twitter2.png'
-  import Discord2 from '@/assets/Discord2.png'
-  import Dribbble2 from '@/assets/Dribbble2.png'
-  import Linkedln2 from '@/assets/LinkedIn2.png'
+  import LeftArrow from '@/assets/Left-arrow.svg'
+  import NavigateRight from '@/assets/Navigation-right.svg'
+  import Home from '@/assets/Home.svg'
+  import Star3 from '@/assets/Star.svg'
+  import Darkbutton from '@/assets/Dark-button.svg'
+  import PaintImage from '@/assets/Paint-image.png'
+  import SuccessLogo from '@/assets/Success-logo.svg'
+  import DownArrow from '@/assets/Down-arrow.svg'
+  import PlusImage from '@/assets/Plus-image.svg'
+  import Insta2 from '@/assets/Insta.svg'
+  import Twitter2 from '@/assets/Twitter.svg'
+  import Discord2 from '@/assets/Discord.svg'
+  import Dribbble2 from '@/assets/Dribbble.svg'
+  import Linkedln2 from '@/assets/Linkedln.svg'
   const router = useRouter()
   function goToCreatePost() {
   console.log('Creating post, going to /pages/PageSitePost16')

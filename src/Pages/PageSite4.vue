@@ -1,439 +1,315 @@
 <template>
-  <div class="PageSite4">
-
-    <div class="nav-icons">
-      <div class="nav-group">
-        <img :src="NavigateLeft" class="nav-icon" @click="goToPageSite3" style="cursor: pointer;" />
-        <img :src="NavigateRight" class="nav-icon" />
-      </div>
-      <div class="home-icon-container">
-        <img :src="Home" class="home-icon" />
-        <span class="home-text">Home</span>
-        <img :src="NavigateRight" class="small-nav-icon" />
-        <img :src="Star" class="star-icon" />
-        <span class="create-text">Create</span>
-        <img :src="NavigateRight" class="create-nav-icon" />
-        <img :src="Add" class="add-icon" />
-        <span class="post-text">Post</span>
-      </div>
-    </div>
-    <div class="paint-image-container">
-      <img :src="PaintImage" class="paint-image" />
-    </div>
-
-
-    <div class="header-row">
-      <span class="header-text">Create post</span>
-      <img :src="ButtonDark" class="dark-button" />
-    </div>
-
-    <div class="form-container">
-
-      <div class="title-group">
-        <label for="title" class="input-label">Title</label>
-        <div class="title-input-wrapper">
+  <div class="page-site4">
+    <Navbar
+      :breadcrumb="['Home', 'Create']"
+      :icons="{
+        left: Navigateleft,
+        right: Navigateright,
+        home: Home,
+        separator: Navigateright,
+        onBack: goToPageSite2
+      }"
+    />
+    <main class="site-main">
+      <section class="image-panel">
+        <img :src="Paintimage" class="paint-image" />
+      </section>
+      <section class="form-panel">
+        <div class="form-header">
+          <span class="header-text">Create post</span>
+          <img :src="Buttondark" class="dark-button" />
+        </div>
+        <div class="form-group">
+          <label for="title" class="label">Title</label>
           <input
             id="title"
-            type="text"
-            class="title-input"
             v-model="title"
-            @focus="isTitleFocused = true"
-            @blur="isTitleFocused = false"
+            type="text"
+            class="text-input"
+            placeholder="The Starry Night"
           />
-          <div class="input-text-overlay" v-if="!title && !isTitleFocused">
-            <span class="text-primary">The Starry Ni</span><span class="text-secondary">ght</span>
+        </div>
+        <div class="form-group">
+          <label for="tags" class="label">Tags</label>
+          <div class="select-wrapper">
+            <select id="tags" class="select">
+              <option disabled selected value="">Select tags…</option>
+            </select>
+            <img :src="Arrow" class="select-arrow" />
           </div>
         </div>
-      </div>
-
-
-      <div class="tags-group">
-        <label for="tags" class="tags-label">Tags</label>
-        <div class="tags-select-wrapper">
-          <select id="tags" class="tags-select">
-
-          </select>
-          <div class="select-placeholder">Select tags...</div>
-          <img :src="Arrow" class="select-arrow" />
+        <div class="genres-row">
+          <span
+            v-for="g in genres"
+            :key="g.value"
+            class="genre-pill"
+            :class="{ active: selectedGenres.includes(g.value) }"
+            @click="toggleGenre(g.value)"
+          >{{ g.label }}</span>
+          <button class="pill-add" @click="addGenre">
+            <img :src="Add" class="add-icon" />
+          </button>
         </div>
-      </div>
-      <div class="genres-row">
-        <span class="genre-pill" style="width: 91px;" :class="{ active: selectedGenres.includes('Abstract2') }" @click="toggleGenre('Abstract2')">
-          Abstract
-        </span>
-        <span class="genre-pill" style="width: 69px;" :class="{ active: selectedGenres.includes('Sci-fi') }" @click="toggleGenre('Sci-fi')">
-          Sci-fi
-        </span>
-        <span class="genre-pill" style="width: 91px;" :class="{ active: selectedGenres.includes('Abstract') }" @click="toggleGenre('Abstract')">
-          Abstract
-        </span>
-
-        <button class="genre-add-button">
-          <img :src="Add" class="add-pill-icon" />
-        </button>
-      </div>
-
-      <div class="description-group">
-        <label for="description" class="description-label">Description</label>
-        <div class="description-input-wrapper">
+        <div class="form-group">
+          <label for="description" class="label">Description</label>
           <textarea
             id="description"
-            class="description-input"
             v-model="description"
-            @focus="isDescriptionFocused = true"
-            @blur="isDescriptionFocused = false"
+            class="textarea"
+            placeholder="Talk about your art…"
           ></textarea>
-          <div class="description-placeholder" v-if="!description && !isDescriptionFocused">
-            Talk about your art...
-          </div>
         </div>
-      </div>
+        <div class="button-row">
+          <button class="btn-draft" @click="saveDraft">
+            <img :src="Folder2" class="icon" />
+            <span>Save draft</span>
+          </button>
+          <button class="btn-post" @click="goToPage13">
+            Post
+          </button>
+        </div>
+      </section>
+    </main>
+    <div v-if="savedMessage" class="toast">
+      Draft Saved
     </div>
-
-  <div class="button-row">
-      <button class="button-draft" @click="saveDraft">
-        <img :src="Folder2" class="folder-icon" />
-        <span class="text-draft">Save draft</span>
-      </button>
-      <button class="button-post" @click="goToPage13">
-        <span class="text-post">Post</span>
-      </button>
-    </div>
-  </div>
-
-
-  <div v-if="savedMessage" class="draft-saved-message">
-    <span>Draft Saved</span>
   </div>
 </template>
 
-
 <script setup>
+import Navbar from '@/components/Common/AppNavbar.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-
-
-import NavigateLeft from '@/assets/NavigateLeft.png'
-import NavigateRight from '@/assets/NavigateRight.png'
-import Home from '@/assets/Home2.png'
-import Star from '@/assets/Star1.png'
-import ButtonDark from '@/assets/ButtonDark.png'
-import PaintImage from '@/assets/PaintImage.png'
-import Add from '@/assets/Add.png'
-import Arrow from '@/assets/Arrow.png'
-import Folder2 from '@/assets/Folder2.png'
-
+import Add from '@/assets/Add.svg'
+import Buttondark from '@/assets/Button-dark.svg'
+import Paintimage from '@/assets/Paint-image.png'
+import Arrow from '@/assets/Arrow.svg'
+import Folder2 from '@/assets/Folder.svg'
 
 const router = useRouter()
-function goToPageSite3() {
-  router.push('/pages/PageSite3')
-}
-
-
 const title = ref('')
-const isTitleFocused = ref(false)
 const description = ref('')
-const isDescriptionFocused = ref(false)
 const selectedGenres = ref([])
-
-
 const savedMessage = ref(false)
 
+const genres = [
+  { value: 'Abstract', label: 'Abstract' },
+  { value: 'Sci-fi',   label: 'Sci-fi' },
+  { value: 'Fantasy',  label: 'Fantasy' }
+]
+function goToPage13()    { router.push('/pages/PageSite1') }
 
-function toggleGenre(genre) {
-  if (selectedGenres.value[0] === genre) {
-    selectedGenres.value = []; 
+function toggleGenre(val) {
+  if (selectedGenres.value.includes(val)) {
+    selectedGenres.value = selectedGenres.value.filter(g => g !== val);
   } else {
-    selectedGenres.value = [genre]; 
+    selectedGenres.value.push(val);
   }
 }
 
+
+function addGenre() {
+  console.log('Add genre clicked')
+}
 
 function saveDraft() {
-
   savedMessage.value = true
-  
-
-  setTimeout(() => {
-    savedMessage.value = false
-  }, 3000)
+  setTimeout(() => (savedMessage.value = false), 3000)
 }
-function goToPage13() {
-  router.push('/pages/PageSite13')
-}
-
 </script>
 
-  
-  <style scoped>
-  .PageSite4 {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-color: #111827;
-    overflow: hidden;
-    padding: 0;
-    box-sizing: border-box;
-  }
+<style scoped>
 
-  .nav-icons {
-    position: absolute;
-    top: 24px;
-    left: 82px;
-    display: flex;
-    gap: 31px;
-    align-items: center;
-  }
-  .nav-group { display: flex; gap: 8px; }
-  .nav-icon,
-  .small-nav-icon,
-  .home-icon,
-  .star-icon,
-  .create-nav-icon,
-  .add-icon,
-  .select-arrow,
-  .add-pill-icon { object-fit: contain; }
-  
-  .nav-icon,
-  .small-nav-icon,
-  .home-icon,
-  .star-icon { width: 24px; height: 24px; }
-  .create-nav-icon { width: 16px; height: 16px; }
-  .add-icon,
-  .add-pill-icon { width: 20px; height: 20px; }
-  .home-icon-container { display: flex; align-items: center; gap: 8px; }
-  .home-text,
-  .create-text,
-  .post-text { font-family: 'Inter', sans-serif; font-size: 14px; color: #ffffff; }
-  .home-text { color: #9ca3af; }
-  .post-text { width: 31px; height: 20px; line-height: 20px; }
-  
-  .paint-image-container {
-    position: absolute;
-    top: 72px;
-    left: 82px;
-    z-index: 0;
-  }
-  .paint-image {
-    width: 684px;
-    height: calc(100vh - 120px);
-    object-fit: cover;
-    border-radius: 20px;
-    border: 10px solid #374151;
-    box-sizing: border-box;
-  }
-  
-  .header-row {
-    position: absolute;
-    top: 72px;
-    left: 828px;
-    width: 636px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    gap: 406px;
-  }
-  .header-text { font-family: 'Inter', sans-serif; font-size: 32px; color: #ffffff; }
-  .dark-button { width: 48px; height: 48px; }
-
-  .form-container {
-    position: absolute;
-    top: 192px;
-    left: 828px;
-    width: 636px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-  .title-group { display: flex; flex-direction: column; gap: 8px; }
-  .input-label { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; color: #ffffff; }
-  .title-input-wrapper { position: relative; width: 636px; height: 44px; }
-  .title-input {
-    width: 100%;
-    height: 100%;
-    background-color: #171A2B;
-    border: 2px solid #374151;
-    border-radius: 12px;
-    padding-left: 10px;
-    color: #ffffff;
-    box-sizing: border-box;
-  }
-  .title-input:focus { outline: none; box-shadow: 0 0 0 3px #2563EBCC; }
-  .input-text-overlay {
-    position: absolute;
-    top: 12px;
-    left: 16px;
-    display: flex;
-    gap: 0;
-    pointer-events: none;
-  }
-  .text-primary { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; color: #D1D5DB; }
-  .text-secondary { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; color: #6B7280; }
-
-  .tags-group { display: flex; flex-direction: column; gap: 8px; }
-  .tags-label { font-family: 'Inter', sans-serif; font-size: 14px; width: 33px; height: 20px; line-height: 20px; color: #ffffff; }
-  .tags-select-wrapper { position: relative; width: 636px; height: 44px; }
-  .tags-select {
-    appearance: none;
-    width: 100%;
-    height: 100%;
-    background-color: #111827;
-    border: 2px solid #374151;
-    border-radius: 12px;
-    padding: 0 12px;
-    box-sizing: border-box;
-    color: #ffffff;
-  }
-  .tags-select:focus { outline: none; box-shadow: 0 0 0 3px #2563EBCC; }
-  .select-placeholder {
-    position: absolute;
-    top: 12px;
-    left: 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: #6B7280;
-    pointer-events: none;
-  }
-  .select-arrow { position: absolute; top: 12px; right: 12px; width: 20px; height: 20px; pointer-events: none; }
-  
-  .genres-row { display: flex; align-items: center; gap: 16px; width: 636px; height: 36px; margin-top: -20px; }
-  .genre-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 36px;
-    background-color: #111827;
-    border: 2px solid #374151;
-    border-radius: 32px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: #6B7280;
-    padding: 0 12px;
-    box-sizing: border-box;
-  }
-  .genre-pill.active {
-  border: 2px solid #ffffff;
-  background-color: #2563EB; 
-  color: #ffffff; 
+.page-site4 {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-height: 100vh;
+  background-color: #111827;
+  font-family: 'Inter', sans-serif;
+}
+.site-header {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  height: 4rem;
+  border-bottom: 1px solid #374151;
 }
 
-  .genre-pill:hover {
+.site-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 1rem 2rem 2rem;
+  align-items: stretch;  
+}
+
+.image-panel {
+    display: flex;
+  align-items: center;
+  min-height: 0;
+}
+.paint-image {
+  width: 100%;
+  height: auto;    
+  max-height: calc(100vh - 100px);
+  object-fit: cover;
+  aspect-ratio: 1 / 1.2;
+  border-radius: 1.25rem;
+  border: 0.625rem solid #374151;
+}
+
+
+.form-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3rem;
+}
+.header-text {
+  font-size: 2rem;
+  color: #FFF;
+}
+.dark-button {
+  width: 3rem;
+  height: 3rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.label {
+  font-size: 0.875rem;
+  color: #FFF;
+}
+
+
+.text-input {
+  height: 2.75rem;
+  padding: 0 0.75rem;
+  background: #171A2B;
+  border: 0.125rem solid #374151;
+  border-radius: 0.75rem;
+  color: #FFF;
+}
+.textarea {
+  min-height: 11.625rem;
+  padding: 0.75rem;
+  background: #111827;
+  border: 0.125rem solid #374151;
+  border-radius: 0.75rem;
+  color: #FFF;
+  resize: vertical;
+}
+
+
+.select-wrapper {
+  position: relative;
+}
+.select {
+  width: 100%;
+  height: 2.75rem;
+  padding: 0 2.5rem 0 0.75rem;
+  background: #111827;
+  border: 0.125rem solid #374151;
+  border-radius: 0.75rem;
+  color: #FFF;
+  appearance: none;
+}
+.select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.genres-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.genre-pill {
+  padding: 0 0.75rem;
+  height: 2.25rem;
+  background: #111827;
+  border: 0.125rem solid #374151;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  color: #6B7280;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  background-color: #374151;
 }
-  .genre-add-button {
-    width: 52px;
-    height: 36px;
-    background-color: #111827;
-    border: 2px solid #374151;
-    border-radius: 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .description-group { display: flex; flex-direction: column; gap: 8px; }
-  .description-label { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px; color: #ffffff; }
-  .description-input-wrapper { position: relative; width: 636px; height: 186px; }
-  .description-input {
-    width: 100%;
-    height: 100%;
-    background-color: #111827;
-    border: 2px solid #374151;
-    border-radius: 12px;
-    padding: 12px;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    line-height: 20px;
-    color: #ffffff;
-    resize: none;
-  }
-  .description-input:focus { outline: none; box-shadow: 0 0 0 3px #2563EBCC; }
-  .description-placeholder {
-    position: absolute;
-    top: 12px;
-    left: 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    color: #6B7280;
-    pointer-events: none;
-  }
-  
-  .button-row {
-    position: absolute;
-    bottom: 48px;
-    left: 828px;
-    width: 636px;
-    height: 52px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .button-draft {
-    width: 207px;
-    height: 52px;
-    background-color: #252A41;
-    border: none;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 16px;
-    gap: 8px;
-    cursor: pointer;
-    box-sizing: border-box;
-  }
-  .draft-saved-message {
+.genre-pill.active {
+  background: #2563EB;
+  border-color: #FFF;
+  color: #FFF;
+}
+.pill-add .add-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+
+.button-row {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.btn-draft,
+.btn-post {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  border: none;
+}
+.btn-draft {
+  background: #252A41;
+  color: #FFF;
+}
+.btn-draft .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.btn-post {
+  background: #2563EB;
+  color: #FFF;
+}
+.toast {
   position: fixed;
-  top: 20px;
+  top: 1.25rem;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #2563EB;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 16px;
-  text-align: center;
-  z-index: 10; 
+  background: #2563EB;
+  color: #FFF;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.3125rem;
+  font-size: 1rem;
+  z-index: 10;
 }
 
-  .folder-icon { width: 24px; height: 24px; }
-  .text-draft {
-    width: 90px;
-    height: 28px;
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    line-height: 28px;
-    color: #ffffff;
-    text-align: center;
+@media (max-width: 48em) {
+  .site-main {
+    grid-template-columns: 1fr;        /* stack on small screens */
   }
-  .button-post {
-    width: 405px;
-    height: 52px;
-    background-color: #2563EB;
-    border: none;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 16px;
-    gap: 8px;
-    box-sizing: border-box;
-  }
-  .text-post {
-    width: 40px;
-    height: 28px;
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    line-height: 28px;
-    letter-spacing: 0;
-    color: #ffffff;
-    text-align: center;
-  }
-  </style>
+}
+
+</style>

@@ -1,6 +1,5 @@
-
+// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-
 
 import PageSite1  from '@/Pages/PageSite1.vue'
 import PageSite2  from '@/Pages/PageSite2.vue'
@@ -19,11 +18,15 @@ import PageSite14 from '@/Pages/PageSite14.vue'
 import PageSite15 from '@/Pages/PageSite15.vue'
 import PageSite16 from '@/Pages/PageSite16.vue'
 
-
 const routes = [
   { path: '/', redirect: '/pages/PageSite1' },
   { path: '/pages/PageSite1',  name: 'PageSite1',  component: PageSite1 },
-  { path: '/pages/PageSite2',  name: 'PageSite2',  component: PageSite2 },
+  {
+    path: '/pages/PageSite2/:cardId',
+    name: 'PageSite2',
+    component: PageSite2,
+    props: true
+  },
   { path: '/pages/PageSite3',  name: 'PageSite3',  component: PageSite3 },
   { path: '/pages/PageSite4',  name: 'PageSite4',  component: PageSite4 },
   { path: '/pages/PageSite5',  name: 'PageSite5',  component: PageSite5 },
@@ -40,7 +43,6 @@ const routes = [
   { path: '/pages/PageSite16', name: 'PageSite16', component: PageSite16 },
   { path: '/:pathMatch(.*)*', redirect: '/pages/PageSite1' }
 ]
-
 
 const router = createRouter({
   history: createWebHistory(),

@@ -23,7 +23,7 @@
       </div>
       <div class="header-row">
         <span class="header-text">إنشاء مشاركة</span>
-        <img :src="DarkButton2" class="dark-button" />
+        <img :src="Darkbutton" class="dark-button" />
       </div>
       <div class="form-container">
         <div class="title-group">
@@ -74,15 +74,15 @@
   
   <script setup>
   import { useRouter } from 'vue-router'
-  import LeftArrow from '@/assets/LeftArrow.png'
-  import NavigateRight from '@/assets/NavigateRight.png'
-  import Home from '@/assets/Home2.png'
-  import Star4 from '@/assets/Star4.png'
-  import DarkButton2 from '@/assets/DarkButton2.png'
-  import PaintImage from '@/assets/PaintImage.png'
-  import Add from '@/assets/Add.png'
-  import Arrow from '@/assets/Arrow.png'
-  import Folder11 from '@/assets/Folder11.png'
+  import LeftArrow from '@/assets/Left-arrow.svg'
+  import NavigateRight from '@/assets/Navigation-right.svg'
+  import Home from '@/assets/Home.svg'
+  import Star4 from '@/assets/Star.svg'
+  import Darkbutton from '@/assets/Dark-button.svg'
+  import PaintImage from '@/assets/Paint-image.png'
+  import Add from '@/assets/Add.svg'
+  import Arrow from '@/assets/Arrow.svg'
+  import Folder11 from '@/assets/Folder.svg'
   
   const router = useRouter()
   const goBack = () => {

@@ -1,711 +1,449 @@
 <template>
-  <div class="PageSite2">
-    <div class="nav-icons">
+  <div class="page-site2">
+    <header class="site-header">
       <div class="nav-group">
-        <img :src="NavigateLeft" class="nav-icon" @click="navigateBack" />
-        <img :src="NavigateRight" class="nav-icon" />
+        <img :src="Navigateleft" class="nav-icon" @click="navigateBack" />
+        <img :src="Navigateright" class="nav-icon" />
       </div>
-      <div class="home-icon-container">
+      <div class="home-group">
         <img :src="Home" class="home-icon" />
         <span class="home-text">Home</span>
         <img :src="NavigateRight" class="small-nav-icon" />
-        <img :src="Star" class="star-icon" />
+        <img :src="Staricon" class="star-icon" />
         <span class="create-text">Create</span>
       </div>
-    </div>
+    </header>
+    <main class="site-main">
 
-
-    <div class="blue-background-container">
-      <img :src="BlueBackground" class="blue-background" />
-      <img :src="MidImg" class="mid-img" />
-    </div>
-
-    <div class="properties-info-row">
-      <div class="properties-info-switch">
-        <div
-          class="switch-tab"
-          :class="{ active: activeTab === 'properties' }"
-          @click="activeTab = 'properties'"
-        >Properties</div>
-        <div
-          class="switch-tab"
-          :class="{ active: activeTab === 'info' }"
-          @click="activeTab = 'info'"
-        >Info</div>
-      </div>
-      <img :src="ButtonDark" class="dark-button" />
-    </div>
-
-    <div class="keyword-text-input-container">
-      <div class="inner-container">
-        <div class="section-block">
-          <label class="keyword-label">Keyword</label>
-          <div class="text-input-container">
+      <section class="image-panel">
+        <div class="blue-bg-wrapper">
+          <img :src="Bluebackground" class="blue-background" />
+          <img :src="Midimg" class="mid-img" />
+        </div>
+      </section>
+      <section class="controls-panel">
+        <div class="properties-info-row">
+          <div class="properties-info-switch">
+            <div
+              class="switch-tab"
+              :class="{ active: activeTab === 'properties' }"
+              @click="activeTab = 'properties'"
+            >Properties</div>
+            <div
+              class="switch-tab"
+              :class="{ active: activeTab === 'info' }"
+              @click="activeTab = 'info'"
+            >Info</div>
+          </div>
+          <img :src="Buttondark" class="dark-button" />
+        </div>
+        <div class="form-block">
+          <div class="section-block">
+            <label class="keyword-label">Keyword</label>
             <input
               type="text"
+              v-model="keyword"
               class="text-input"
               placeholder="The Starry Night"
             />
           </div>
-        </div>
-        <div class="section-block">
-          <div class="horizontal-labels">
-            <label class="genre-label">Genres</label>
-            <label class="size-label">Size</label>
-          </div>
-          <div class="horizontal-fields">
+          <div class="section-block horizontal-fields-group">
             <div class="field-block genre-block select-with-icon">
+              <label class="field-label">Genres</label>
               <select class="category-selector" v-model="selectedGenre">
                 <option disabled value="">Select Genre...</option>
-                <option>Abstract</option>
-                <option>Sci-fi</option>
-                <option>Fantasy</option>
+                <option v-for="genre in allGenres" :key="genre">{{ genre }}</option>
               </select>
               <img :src="Arrow" class="select-arrow" />
             </div>
             <div class="field-block size-block select-with-icon">
-              <select class="size-selector">
-                <option disabled selected>668 x 740</option>
-                <option>512 x 512</option>
-                <option>1024 x 768</option>
+              <label class="field-label">Size</label>
+              <select class="size-selector" v-model="selectedSize">
+                <option disabled value="">Select Size...</option>
+                <option v-for="size in allSizes" :key="size">{{ size }}</option>
               </select>
               <img :src="Arrow" class="select-arrow" />
             </div>
           </div>
           <div class="genre-tags-row">
-  <span
-    class="genre-pill genre-pill--large"
-    :class="{
-      'active-pill': selectedPillIndex === 0
-    }"
-    @click="selectPill(0)"
-  >
-    Abstract
-  </span>
-  <span
-    class="genre-pill genre-pill--medium"
-    :class="{
-      'active-pill': selectedPillIndex === 1
-    }"
-    @click="selectPill(1)"
-  >
-    Sci-fi
-  </span>
-  <span
-    class="genre-pill genre-pill--large"
-    :class="{
-      'active-pill': selectedPillIndex === 2
-    }"
-    @click="selectPill(2)"
-  >
-    Fantasy
-  </span>
+            <span
+              v-for="(pill, index) in genrePills"
+              :key="pill.id"
+              class="genre-pill"
+              :class="[pill.sizeClass, { 'active-pill': selectedPillIndex === index } ]"
+              @click="selectPill(index)"
+            >
+              {{ pill.label }}
+            </span>
+            <button class="genre-add" @click="addGenre">
+              <img :src="Add" class="add-icon" />
+            </button>
+          </div>
 
-  <button class="genre-add" @click="addGenre">
-    <span class="genre-add-icon">
-      <img :src="Add" class="Add-Icon" />
-    </span>
-  </button>
-</div>
 
+          <div class="section-block colors-section">
+            <label class="keyword-label">Colors</label>
+            <div class="color-badges-row">
+              <button class="color-clear" @click="clearColor">
+                <img :src="XImg" alt="Clear" class="x-icon" />
+              </button>
+              <div
+                v-for="badge in colorBadges"
+                :key="badge.code"
+                class="color-badge"
+                :class="[badge.code, { 'selected-color': selectedColor === badge.code } ]"
+                @click="selectedColor = badge.code"
+              ></div>
+              <div class="color-divider"></div>
+              <button class="color-add">
+                <img :src="Addimage" alt="Add" class="add-icon" />
+              </button>
+            </div>
+          </div>
+          <div class="section-block sample-block">
+            <label class="keyword-label">Sample</label>
+            <div class="sample-dropzone">
+              <img :src="Folderimage" class="folder-image" />
+              <p class="drop-text">
+                <span class="text-white">Drag and Drop</span>
+                <span class="text-blue">or Browse</span>
+              </p>
+              <p class="support-text">Support all image formats</p>
+            </div>
+          </div>
+          <button class="create-button" @click="handleCreate">Create</button>
         </div>
-        <div class="section-block section-block--tight colors-section">
-  <label class="keyword-label">Colors</label>
-  <div class="color-badges-row">
-    <button class="color-clear">
-      <img :src="XImg" alt="Clear" class="X-Icon" />
-    </button>
-    
-    <div 
-      class="color-badge blue" 
-      :class="{'selected-color': selectedColor === 'blue'}" 
-      @click="selectedColor = 'blue'"
-    ></div>
-    <div 
-      class="color-badge red" 
-      :class="{'selected-color': selectedColor === 'red'}" 
-      @click="selectedColor = 'red'"
-    ></div>
-    <div 
-      class="color-badge orange" 
-      :class="{'selected-color': selectedColor === 'orange'}" 
-      @click="selectedColor = 'orange'"
-    ></div>
-    <div 
-      class="color-badge pink" 
-      :class="{'selected-color': selectedColor === 'pink'}" 
-      @click="selectedColor = 'pink'"
-    ></div>
-    <div 
-      class="color-badge yellow" 
-      :class="{'selected-color': selectedColor === 'yellow'}" 
-      @click="selectedColor = 'yellow'"
-    ></div>
-    <div 
-      class="color-badge gray" 
-      :class="{'selected-color': selectedColor === 'gray'}" 
-      @click="selectedColor = 'gray'"
-    ></div>
-    
-    <div class="color-divider"></div>
-    <button class="color-add">
-      <img :src="AddImage" alt="Add" class="Add-Icon" />
-    </button>
-  </div>
-</div>
-
-<div class="section-block sample-block">
-  <label class="keyword-label">Sample</label>
-  <div class="sample-dropzone">
-    <div class="dropzone-content">
-      <img :src="FolderImage" class="folder-image" />
-      <p class="line1">
-        <span class="text-white">Drag and </span>
-        <span class="text-white">Drop</span>
-        <span class="text-white">or</span>
-        <span class="text-blue">Browse</span>
-      </p>
-      <p class="line2">Support all image format</p>
-    </div>
-  </div>
-</div>
-<button class="create-button" @click="handleCreate">Create</button>
-
-      </div>
-    </div>
+      </section>
+    </main>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import NavigateLeft from '@/assets/NavigateLeft.png'
-import NavigateRight from '@/assets/NavigateRight.png'
-import Home from '@/assets/Home2.png'
-import Star from '@/assets/Star1.png'
-import BlueBackground from '@/assets/BlueBackground.png'
-import MidImg from '@/assets/MidImg.png'
-import ButtonDark from '@/assets/ButtonDark.png'
-import Arrow from '@/assets/Arrow.png'
-import XImg from '@/assets/XImg.png'
-import AddImage from '@/assets/AddImage.png'
-import Add from '@/assets/Add.png'
-import FolderImage from '@/assets/FolderImage.png'
-
+import Navigateleft from '@/assets/Navigate-left.svg'
+import Navigateright from '@/assets/Navigation-right.svg'
+import Home from '@/assets/Home.svg'
+import Staricon from '@/assets/Star.svg'
+import Bluebackground from '@/assets/Blue-background.webp'
+import Midimg from '@/assets/Mid-img.webp'
+import Buttondark from '@/assets/Button-dark.svg'
+import Arrow from '@/assets/Arrow.svg'
+import XImg from '@/assets/XImg.svg'
+import Addimage from '@/assets/Add.svg'
+import Add from '@/assets/Add.svg'
+import Folderimage from '@/assets/Folder-Image.svg'
 const router = useRouter()
 const activeTab = ref('properties')
+const keyword = ref('')
+const allGenres = ref(['Abstract', 'Sci-fi', 'Fantasy'])
 const selectedGenre = ref('')
-const genres = ref([])
-
+const allSizes = ref(['668 x 740', '512 x 512', '1024 x 768'])
+const selectedSize = ref('')
+const genrePills = ref([
+  { id: 'p1', label: 'Abstract', sizeClass: 'genre-pill--large' },
+  { id: 'p2', label: 'Sci-fi', sizeClass: 'genre-pill--medium' },
+  { id: 'p3', label: 'Fantasy', sizeClass: 'genre-pill--large' }
+])
+const selectedPillIndex = ref(null)
+const colorBadges = ref([
+  { code: 'blue' },
+  { code: 'red' },
+  { code: 'orange' },
+  { code: 'pink' },
+  { code: 'yellow' },
+  { code: 'gray' }
+])
+const selectedColor = ref(null)
 const addGenre = () => {
-  if (selectedGenre.value && !genres.value.includes(selectedGenre.value)) {
-    genres.value.push(selectedGenre.value)
+  if (selectedGenre.value && !allGenres.value.includes(selectedGenre.value)) {
+    allGenres.value.push(selectedGenre.value)
   }
 }
-const navigateBack = () => {
-  router.push('/pages/PageSite1')
-}
-function handleCreate() {
-
-  alert('Create success')
-
+const selectPill = (index) => selectedPillIndex.value = index
+const clearColor = () => selectedColor.value = null
+const navigateBack = () => router.push('/pages/PageSite1')
+const handleCreate = () => {
 
   router.push({ name: 'PageSite3' })
 }
-const selectedPillIndex = ref(null)
-
-const selectPill = (index) => {
-  selectedPillIndex.value = index
-}
-const selectedColor = ref(null);
-
-
-
 </script>
 
 <style scoped>
-.PageSite2 {
-  position: relative;
-  width: 100vw;
+.page-site2 {
+  --color-blue: #3B82F6;
+  --color-red: #EF4444;
+  --color-orange: #F97316;
+  --color-pink: #EC4899;
+  --color-yellow: #FACC15;
+  --color-gray: #6B7280;
+  --color-border-selected: #FFFFFF;
+  --gradient-start: #2563EB;
+  --gradient-end:   #1D4ED8;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
+  padding-bottom: 72px;
   background-color: #111827;
-  overflow: hidden;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
-.nav-icons {
-  position: absolute;
-  top: 24px;
-  left: 82px;
+.site-header {
   display: flex;
-  gap: 31px;
   align-items: center;
+  padding: 1rem 2rem;
+  gap: 2rem;
 }
 
-.nav-group {
+.nav-group,
+.home-group {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 0.5rem;
 }
-
+.home-group { margin-left: auto; }
 .nav-icon,
 .small-nav-icon,
 .home-icon,
 .star-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.home-text,
+.create-text { font-size: 0.875rem; }
+.home-text { color: #9CA3AF; }
+.create-text { color: #FFFFFF; }
+
+.site-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  flex: 1;
+  min-height: 0;
+  padding: 1.5rem 2rem 0;
+  align-items: stretch;
 }
 
-.home-icon-container {
+.image-panel {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  min-height: 0;
 }
-
-.home-text,
-.create-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
+.blue-bg-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.25rem;
+  overflow: hidden;
 }
-
-.home-text {
-  color: #9ca3af;
-}
-
-.create-text {
-  color: #ffffff;
-}
-
-.blue-background-container {
-  position: absolute;
-  top: 72px;
-  left: 72px;
-  z-index: 0;
-}
-
 .blue-background {
-  width: 684px;
-  height: calc(100vh - 120px);
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 20px;
 }
-
 .mid-img {
   position: absolute;
-  width: 348px;
-  height: 354px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;
+  width: 50%;
+  max-width: 20rem;
+  aspect-ratio: 1;
 }
 
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .properties-info-row {
-  position: absolute;
-  top: 72px;
-  left: 828px;
-  width: 636px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
 }
-
 .properties-info-switch {
   display: flex;
   background: #111827;
   border: 2px solid #374151;
-  border-radius: 16px;
+  border-radius: 1rem;
   overflow: hidden;
 }
-
 .switch-tab {
-  padding: 0 16px;
-  height: 52px;
+  padding: 0 1rem;
+  height: 3.25rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 1.125rem;
+  color: #9CA3AF;
   cursor: pointer;
 }
-
 .switch-tab.active {
-  background: #252a41;
-  color: #ffffff;
+  background: #252A41;
+  color: #FFFFFF;
 }
-
 .dark-button {
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
 }
 
-.keyword-text-input-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.inner-container {
-  position: absolute;
-  top: 196px;
-  bottom: 48px;
-  left: 828px;
-  width: 636px;
+.form-block {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  pointer-events: auto;
+  gap: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
 }
-
 .section-block {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
-
-.section-block--tight {
-  gap: 4px;
-}
-
-.keyword-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
+.keyword-label,
+.field-label {
+  font-size: 0.875rem;
   font-weight: 500;
-  color: #9ca3af;
-  margin: 0;
+  color: #9CA3AF;
 }
-
-.text-input-container {
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-}
-
 .text-input {
-  width: 100%;
-  height: 44px;
-  padding: 0 16px;
+  height: 2.75rem;
+  padding: 0 1rem;
   background: transparent;
-  border: 2px solid #2563eb;
-  border-radius: 12px;
+  border: 2px solid #2563EB;
+  border-radius: 0.75rem;
   color: white;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
-.text-input:focus {
-  border-width: 3px;
+.horizontal-fields-group {
+  display: flex;
+  gap: 1.5rem;
 }
-
-.select-with-icon {
-  position: relative;
-}
-
+.field-block { flex: 1; }
+.select-with-icon { position: relative; }
 .select-arrow {
   position: absolute;
-  right: 12px;
+  right: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   pointer-events: none;
 }
-
-.category-selector {
-  width: 459px;
-  height: 44px;
-  padding
-: 0 40px 0 16px;
-  background: transparent;
-  border: 2px solid #374151;
-  border-radius: 12px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: #6B7280;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
+.category-selector,
 .size-selector {
-  width: 153px;
-  height: 44px;
-  padding: 0 40px 0 16px;
+  width: 100%;
+  height: 2.75rem;
+  padding: 0 2.5rem 0 1rem;
   background: transparent;
   border: 2px solid #374151;
-  border-radius: 12px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
   color: #6B7280;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
-}
-
-.category-selector option,
-.size-selector option {
-  color: #6B7280;
-}
-
-.horizontal-labels {
-  display: flex;
-  gap: 24px;
-}
-
-.genre-label {
-  font-family: 'Inter', sans-serif;
-  color: white;
-  width: 459px;
-  font-size: 14px;
-}
-
-.size-label {
-  font-family: 'Inter', sans-serif;
-  width: 153px;
-  color: white;
-  font-size: 14px;
-  text-align: left;
-}
-
-.horizontal-fields {
-  display: flex;
-  gap: 24px;
 }
 
 .genre-tags-row {
   display: flex;
-  gap: 16px;
   align-items: center;
-  width: 459px;
-  height: 36px;
+  gap: 1rem;
 }
-
 .genre-pill {
   display: flex;
-  margin-top: 15px;
   align-items: center;
   justify-content: center;
   background: #111827;
   border: 2px solid #374151;
-  border-radius: 32px;
+  border-radius: 2rem;
   color: #6B7280;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  padding: 0;
+  font-size: 0.875rem;
+  padding: 0 1rem;
+  height: 2.25rem;
 }
-
-.genre-pill--large {
-  width: 91px;
-  height: 36px;
-}
-
-.genre-pill--medium {
-  width: 69px;
-  height: 36px;
-}
-
+.genre-pill--large { min-width: 5.75rem; }
+.genre-pill--medium { min-width: 4.25rem; }
 .genre-add {
-  position: relative; 
-  width: 52px;
-  height: 36px;
-  margin-top: 15px;
+  width: 3rem;
+  height: 2.25rem;
   background: transparent;
   border: 2px solid #374151;
-  border-radius: 32px;
-  padding: 0;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-.genre-add-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  transform: translate(-50%, -50%);
-}
-
-.genre-add-icon .Add-Icon {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.active-pill {
-  background-color: #111827; 
-  color: white;  
-}
-
-
-
-
-.color-badges-row {
-display: flex;
-gap: 16px;
-align-items: center;
-width: 384px;
-height: 60px;
-}
-
-.X-Icon {
-width: 32px;
-height: 32px;
-}
+.add-icon,
+.x-icon { width: 1.25rem; height: 1.25rem; }
+.active-pill { background: #111827; color: white; }
 
 .colors-section {
-  row-gap: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
-.section-block--tight .keyword-label{
-  color: white;
-  margin-top: 20px;
+.color-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 .color-clear {
-  width: 32px;
-  height: 32px;
-  box-sizing: border-box;
-  border-radius: 50%;
-  background: transparent;        
+  width: 2rem;
+  height: 2rem;
   border: 1px solid #374151;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
 }
-
-.color-clear .X-Icon {
-  width: 32px;
-  height: 32px;
-  display: block;
-}
-
-.color-add {
-width: 32px;
-height: 32px;
-border-radius: 50%;
-background: #252A41;       
-border: 1px solid #374151;
-display: flex;
-align-items: center;
-justify-content: center;
-line-height: 30px;
-padding: 0;
-color: white;
-}
-.color-add .Add-Icon {
-  width: 24px;
-  height: 24px;
-}
-
-
 .color-badge {
-width: 32px;
-height: 32px;
-border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
 }
-
-.color-badge.blue {
-background: #3B82F6;
+.color-badge.blue   { background: var(--color-blue); }
+.color-badge.red    { background: var(--color-red); }
+.color-badge.orange { background: var(--color-orange); }
+.color-badge.pink   { background: var(--color-pink); }
+.color-badge.yellow { background: var(--color-yellow); }
+.color-badge.gray   { background: var(--color-gray); }
+.colors-section .color-badges-row .color-badge.selected-color {
+  border: 2px solid var(--color-border-selected);
 }
+.color-divider { width: 1px; height: 2rem; background: #374151; }
 
-.color-badge.red {
-background: #EF4444;
-}
-
-.color-badge.orange {
-background: #F97316;
-}
-
-.color-badge.pink {
-background: #EC4899;
-}
-
-.color-badge.yellow {
-background: #FACC15;
-}
-
-.color-badge.gray {
-background: #6B7280;
-}
-.selected-color {
-  border: 2px solid white !important;
-}
-
-.color-divider {
-width: 1px;
-height: 33px;
-background: #374151;
-}
-
-
-.sample-dropzone {
+.sample-block .sample-dropzone {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0px;
-  width: 636px;
-  height: 204px;
+  gap: 0.5rem;
+  width: 100%;
+  height: 12rem;
   background: #1C2237;
   border: 1px solid #374151;
-  border-radius: 12px;
+  border-radius: 0.75rem;
 }
-
-.folder-image {
-  width: 54px;
-  height: 54px;
-  margin-bottom: 10px;
-}
-
-.dropzone-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;    
-  gap: 0px;                
-  text-align: center;     
-  height: 100%;           
-  width: 100%;
-}
-.dropzone-content .line1 {
-  display: flex;
-  gap: 4px;                
-  margin: 0;               
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-}
-.dropzone-content .line2 {
-  margin: 0;              
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  line-height: 20px;
-  color: #9CA3AF;
-}
-.dropzone-content .text-white { color: #FFFFFF; }
-.dropzone-content .text-blue  { color: #2563EB; }
-.sample-block .keyword-label {
-  margin-top: 16px;
-  color: white;
-}
-
+.drop-text { display: flex; gap: 0.25rem; font-size: 0.875rem; }
+.support-text { font-size: 0.625rem; color: #9CA3AF; }
+.folder-image { width: 3.375rem; height: 3.375rem; }
 
 .create-button {
-margin-top: auto;
-height: 48px;
-background: linear-gradient(90deg, #2563eb, #1d4ed8);
-color: white;
-border: none;
-border-radius: 12px;
-font-family: 'Inter', sans-serif;
-font-size: 16px;
-font-weight: 600;
-cursor: pointer;
+  margin-top: auto;
+  height: 3rem;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.create-button:hover {
+  background: linear-gradient(90deg, var(--gradient-end), var(--gradient-start));
 }
 
-.create-button:hover {
-background: linear-gradient(90deg, #1d4ed8, #2563eb);
+@media (max-width: 1024px) {
+  .site-main { grid-template-columns: 1fr; }
 }
 </style>

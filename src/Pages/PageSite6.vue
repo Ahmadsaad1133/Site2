@@ -2,22 +2,22 @@
     <div class="PageSite6">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="NavigateLeft" class="nav-icon" @click="navigateBack" />
-          <img :src="NavigateRight" class="nav-icon" />
+          <img :src="Navigateleft" class="nav-icon" @click="navigateBack" />
+          <img :src="Navigateright" class="nav-icon" />
         </div>
         <div class="home-icon-container">
           <img :src="Home" class="home-icon" />
           <span class="home-text">الصفحة الرئيسية</span>
-          <img :src="NavigateRight" class="small-nav-icon" />
-          <img :src="Star" class="star-icon" />
+          <img :src="Navigateright" class="small-nav-icon" />
+          <img :src="Staricon" class="star-icon" />
           <span class="create-text">إنشاء</span>
         </div>
       </div>
   
   
       <div class="blue-background-container">
-        <img :src="BlueBackground" class="blue-background" />
-        <img :src="MidImg" class="mid-img" />
+        <img :src="Bluebackground" class="blue-background" />
+        <img :src="Midimg" class="mid-img" />
       </div>
   
      
@@ -34,7 +34,7 @@
             @click="activeTab = 'المعلومات'"
           >المعلومات</div>
         </div>
-        <img :src="ButtonDark" class="dark-button" />
+        <img :src="Buttondark" class="dark-button" />
       </div>
   
       
@@ -163,7 +163,7 @@
     
     <div class="color-divider"></div>
     <button class="color-add">
-      <img :src="AddImage" alt="Add" class="Add-Icon" />
+      <img :src="Add" alt="Add" class="Add-Icon" />
     </button>
             </div>
           </div>
@@ -173,7 +173,7 @@
     <label class="keyword-label">نموذج</label>
     <div class="sample-dropzone">
       <div class="dropzone-content">
-        <img :src="FolderImage" class="folder-image" />
+        <img :src="Folderimage" class="folder-image" />
         <p class="line1">
           
           
@@ -199,18 +199,17 @@
   <script setup>
   import { useRouter } from 'vue-router'
   import { ref } from 'vue'
-  import NavigateLeft from '@/assets/NavigateLeft.png'
-  import NavigateRight from '@/assets/NavigateRight.png'
-  import Home from '@/assets/Home2.png'
-  import Star from '@/assets/Star1.png'
-  import BlueBackground from '@/assets/BlueBackground.png'
-  import MidImg from '@/assets/MidImg.png'
-  import ButtonDark from '@/assets/ButtonDark.png'
-  import Arrow from '@/assets/Arrow.png'
-  import XImg from '@/assets/XImg.png'
-  import AddImage from '@/assets/AddImage.png'
-  import Add from '@/assets/Add.png'
-  import FolderImage from '@/assets/FolderImage.png'
+  import Navigateleft from '@/assets/Navigate-left.svg'
+  import Navigateright from '@/assets/Navigation-right.svg'
+  import Home from '@/assets/Home.svg'
+  import Staricon from '@/assets/Star.svg'
+  import Bluebackground from '@/assets/Blue-background.webp'
+  import Midimg from '@/assets/Mid-img.webp'
+  import Buttondark from '@/assets/Button-dark.svg'
+  import Arrow from '@/assets/Arrow.svg'
+  import XImg from '@/assets/XImg.svg'
+  import Add from '@/assets/Add.svg'
+  import Folderimage from '@/assets/Folder-Image.svg'
   
   const router = useRouter()
   const activeTab = ref('خصائص')

@@ -2,26 +2,26 @@
     <div class="page-site8">
       <div class="nav-icons">
         <div class="nav-group">
-          <img :src="NavigateLeft" class="nav-icon"  @click="goToPageSite7" style="cursor: pointer;"/>
-          <img :src="NavigateRight" class="nav-icon" />
+          <img :src="Navigateleft" class="nav-icon"  @click="goToPageSite7" style="cursor: pointer;"/>
+          <img :src="Navigateright" class="nav-icon" />
         </div>
         <div class="home-icon-container">
           <img :src="Home" class="home-icon" />
           <span class="home-text">الصفحة الرئيسية</span>
-          <img :src="NavigateRight" class="small-nav-icon" />
-          <img :src="Star" class="star-icon" />
+          <img :src="Navigateright" class="small-nav-icon" />
+          <img :src="Staricon" class="star-icon" />
           <span class="create-text">إنشاء</span>
-          <img :src="NavigateRight" class="create-nav-icon" />
+          <img :src="Navigateright" class="create-nav-icon" />
           <img :src="Add" class="add-icon" />
           <span class="post-text">مشاركة</span>
         </div>
       </div>
       <div class="paint-image-container">
-        <img :src="PaintImage" class="paint-image" />
+        <img :src="Paintimage" class="paint-image" />
       </div>
       <div class="header-row">
         <span class="header-text">إنشاء مشاركة</span>
-        <img :src="ButtonDark" class="dark-button" />
+        <img :src="Buttondark" class="dark-button" />
       </div>
       <div class="form-container">
         <div class="title-group">
@@ -85,16 +85,16 @@
   
   <script setup>
   import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-  import NavigateLeft from '@/assets/NavigateLeft.png'
-  import NavigateRight from '@/assets/NavigateRight.png'
-  import Home from '@/assets/Home2.png'
-  import Star from '@/assets/Star1.png'
-  import ButtonDark from '@/assets/ButtonDark.png'
-  import PaintImage from '@/assets/PaintImage.png'
-  import Add from '@/assets/Add.png'
-  import Arrow from '@/assets/Arrow.png'
-  import Folder2 from '@/assets/Folder2.png'
+  import { useRouter } from 'vue-router'
+  import Navigateleft from '@/assets/Navigate-left.svg'
+  import Navigateright from '@/assets/Navigation-right.svg'
+  import Home from '@/assets/Home.svg'
+  import Staricon from '@/assets/Star.svg'
+  import Buttondark from '@/assets/Button-dark.svg'
+  import Paintimage from '@/assets/Paint-image.png'
+  import Add from '@/assets/Add.svg'
+  import Arrow from '@/assets/Arrow.svg'
+  import Folder2 from '@/assets/Folder.svg'
   const title = ref('')
   const savedMessage = ref(false)
   const selectedGenres = ref([])
