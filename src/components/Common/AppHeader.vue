@@ -3,12 +3,12 @@
     <div class="top-row">
       <div class="search-wrapper">
         <div class="search-widget">
-          <img :src="searchIcon" alt="Search Icon" class="search-icon" />
+          <img :src="searchIcon" :alt="t('header.searchIconAlt')" class="search-icon" />
           <input
             type="text"
             v-model="searchQuery"
             @keyup.enter="onSearch"
-            placeholder="Search"
+            :placeholder="t('header.searchPlaceholder')"
             class="search-input"
           />
         </div>
@@ -16,7 +16,7 @@
 
       <div class="profile-widget">
         <div class="profile-pic">
-          <img :src="props.user.avatar" alt="User" class="avatar" />
+          <img :src="props.user.avatar" :alt="t('header.userAvatarAlt', { name: props.user.name })" class="avatar" />
         </div>
         <div class="info-and-icons">
           <div class="user-info">
@@ -25,10 +25,11 @@
           </div>
           <div class="icons-group">
             <div class="arrow-container">
-              <img :src="arrowIcon" alt="Arrow" class="arrow-icon" />
+              <img :src="arrowIcon" :alt="t('header.arrowIconAlt')" class="arrow-icon" />
             </div>
             <div class="bell-container">
-              <img :src="bellIcon" alt="Bell Icon" class="bell-icon" />
+              <img :src="bellIcon" :alt="t('header.bellIconAlt')" class="bell-icon" 
+              />
             </div>
           </div>
         </div>
@@ -44,18 +45,18 @@
           :class="['category-btn', selectedCategory === i ? 'selected' : '']"
           @click="selectCategory(i)"
         >
-          {{ cat }}
+          {{ t(`categories.${cat}`) }}
         </button>
 
         <button class="category-btn add-btn" @click="onAdd">
-          <img :src="addIcon" alt="Add" class="add-icon" />
+          <img :src="addIcon" :alt="t('header.addIconAlt')" class="add-icon" />
         </button>
       </div>
 
       <button class="filter-btn" @click="onFilter">
-        <img :src="filterIcon" alt="Filter Icon" class="filter-icon" />
-        <span class="filter-text">Filter</span>
-        <img :src="arrowIcon" alt="Arrow Icon" class="filter-arrow" />
+        <img :src="filterIcon" :alt="t('header.filterIconAlt')" class="filter-icon" />
+        <span class="filter-text">{{ t('header.filterText') }}</span>
+        <img :src="arrowIcon" :alt="t('header.filterArrowAlt')" class="filter-arrow" />
       </button>
     </div>
   </header>
@@ -63,14 +64,17 @@
 
 <script setup>
 /* eslint-disable vue/no-setup-props-destructure */
-/* global defineProps, defineEmits */
+/* eslint-disable no-undef */
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   user: { type: Object, required: true },
   categories: { type: Array, required: true }
 })
 const emit = defineEmits(['search', 'categorySelect', 'addCategory', 'filter'])
+const { t } = useI18n()
+
 const categoriesList = computed(() => Array.from(new Set(props.categories)))
 
 const searchIcon = require('@/assets/Search.svg')
@@ -98,15 +102,26 @@ function onFilter() {
   emit('filter')
 }
 </script>
+<style>
+:root {
+  --filter-text-color: grey;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --filter-text-color: white;
+  }
+}
+</style>
 
 <style scoped>
 .header {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 72px;
-  background-color: #111827;
   color: white;
+  padding-block: 16px;
+  padding-inline: 72px;
 }
 
 .top-row {
@@ -123,7 +138,7 @@ function onFilter() {
 }
 
 .search-wrapper {
-  background-color: #111827;
+  background-color: var(--main-bg);
   border-radius: 12px;
   width: 260px;
   height: 44px;
@@ -148,14 +163,14 @@ function onFilter() {
 .search-input {
   background-color: transparent;
   border: none;
-  color: white;
+  color: var(--text-color);
   font-size: 14px;
   line-height: 20px;
   flex: 1;
   outline: none;
 }
 .search-input::placeholder {
-  color: white;
+color: var(--text-color);
   opacity: 1;
 }
 
@@ -179,12 +194,14 @@ function onFilter() {
 
 .user-info .name {
   font-weight: bold;
+  color: var(--text-color);
   font-size: 14px;
   margin: 0;
 }
 .user-info .company {
   opacity: 0.7;
   font-size: 14px;
+  color: var(--text-color);
   margin: 0;
 }
 
@@ -194,7 +211,16 @@ function onFilter() {
   gap: 8px;
 }
 
-.arrow-container .arrow-icon {
+.arrow-icon,
+.bell-icon,
+.filter-icon,
+.filter-arrow {
+  width: 20px;
+  height: 20px;
+}
+
+.arrow-container .arrow-icon,
+.filter-arrow {
   width: 16px;
   height: 16px;
 }
@@ -204,12 +230,9 @@ function onFilter() {
   border: 2px solid #374151;
   border-radius: 12px;
   display: flex;
+  
   align-items: center;
   justify-content: center;
-}
-.bell-icon {
-  width: 24px;
-  height: 24px;
 }
 
 .bottom-row {
@@ -224,7 +247,7 @@ function onFilter() {
 }
 
 .category-btn {
-  background-color: #111827;
+  background-color: var(--main-bg);
   border: 2px solid #6b7280;
   border-radius: 32px;
   color: #6b7280;
@@ -242,8 +265,8 @@ function onFilter() {
 }
 
 .category-btn.selected {
-  background-color: #252A41;
-  color: white;
+  background-color: var(--sidebar-bg);
+  color: var(--fg);
 }
 
 .add-btn {
@@ -263,26 +286,15 @@ function onFilter() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #111827;
+  background-color: var(--main-bg);
   border: 1px solid #374151;
   border-radius: 12px;
   padding: 0 12px;
   cursor: pointer;
-  color: white;
 }
-
-.filter-icon {
-  width: 20px;
-  height: 20px;
-}
-
 .filter-text {
+  color: var(--text-color);
   font-size: 14px;
-  margin-left: 8px;
-}
-
-.filter-arrow {
-  width: 20px;
-  height: 20px;
+  font-weight: bold;
 }
 </style>

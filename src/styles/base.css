@@ -8,10 +8,33 @@
   --bg-dark: #111827;
   --bg-light: #f3f4f6;
   --text-light: white;
-  --text-dark: #333;
+  --text-dark: #9CA3AF;
   --accent: #2563eb;
   --muted: #9ca3af;
   --radius: 12px;
+  --main-bg:    #ffffff;
+  --sidebar-bg: #f3f4f6;
+  --fg:         #222222;
+--bluebackground: #edf2f7;
+  --panel-bg:   #1C2237;  
+  --panel-border: #374151;
+  --input-border: #2563EB;
+  --heading-color: #9CA3AF;
+  --btn-gradient-start: #2563EB;
+  --btn-gradient-end:   #1D4ED8;
+}
+html.dark {
+  --main-bg:    #111827;
+  --sidebar-bg: #1E2235;
+  --fg:         #edf2f7;
+  --bluebackground: #c5cfeb; 
+
+  --panel-bg:   #111827;
+  --panel-border: #374151;
+  --input-border: #374151;
+  --heading-color: #9CA3AF;
+  --btn-gradient-start: #2563EB;
+  --btn-gradient-end:   #1D4ED8;
 }
 body.dark-theme {
   --sidebar-bg: var(--bg-dark);
@@ -60,6 +83,8 @@ body.light-theme {
 }
 
 .main-column {
+  top: 0;
+  right: 0;
 }
 
 .header {
@@ -72,7 +97,7 @@ body.light-theme {
 .content-wrapper {
   flex: 1;
   overflow: auto;
-  padding-top: 1rem; 
+  padding-top: 0; 
   
 }
 
@@ -85,4 +110,9 @@ body.light-theme {
 }
 .content-wrapper > .container {
 
+
  }
+
+ .bluebackground {
+  background-color: var(--bluebackground);
+}

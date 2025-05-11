@@ -1,31 +1,35 @@
 <template>
   <aside class="app-sidebar">
     <div class="top-section">
-
       <div class="logo-section">
-        <img :src="logoImage" alt="Logo Icon" class="logo-image" />
-        <span class="logo-text">Chain</span>
+        <img :src="logoImage" :alt="t('sidebar.logoAlt')" class="logo-image" />
+        <span class="logo-text">{{ t('sidebar.chain') }}</span>
       </div>
 
       <button class="create-btn" @click="onCreateClick">
-        <img :src="StarIcon" alt="Star Icon" class="star-icon" />
-        <span>Create</span>
+        <img :src="StarIcon" :alt="t('sidebar.createAlt')" class="star-icon" />
+        <span>{{ t('sidebar.create') }}</span>
       </button>
 
       <nav class="main-menu">
         <div class="menu-container">
           <ul class="menu-column">
-            <li :class="{ active: activeMenu === 'Home' }" @click="setActive('Home', '/home')">
+            <li :class="{ active: activeMenu === 'home' }" @click="setActive('home', '/home')">
               <div class="menu-content">
-                <img :src="homeIcon" alt="Home Icon" class="home-icon" />
-                <span class="menu-text">Home</span>
+                <img :src="homeIcon" :alt="t('sidebar.homeAlt')" class="home-icon" />
+                <span class="menu-text">{{ t('sidebar.home') }}</span>
               </div>
-              <img :src="NotificationImage" alt="Notification Icon" class="notif-icon" />
+              <img :src="NotificationImage" :alt="t('sidebar.notificationsAlt')" class="notif-icon" />
             </li>
-            <li v-for="(item, index) in menuItems" :key="index" :class="{ active: activeMenu === item.label }" @click="setActive(item.label, item.route)">
+            <li
+              v-for="(item, index) in menuItems"
+              :key="index"
+              :class="{ active: activeMenu === item.key }"
+              @click="setActive(item.key, item.route)"
+            >
               <div class="menu-content">
-                <img :src="item.icon" :alt="`${item.label} Icon`" class="menu-icon" />
-                <span class="menu-text">{{ item.label }}</span>
+                <img :src="item.icon" :alt="t(item.alt)" class="menu-icon" />
+                <span class="menu-text">{{ t(item.label) }}</span>
               </div>
             </li>
           </ul>
@@ -36,7 +40,7 @@
     <div class="bottom-section">
       <div class="bottom-items">
         <div class="language-column">
-          <p class="language-text">Language</p>
+          <p class="language-text">{{ t('sidebar.language') }}</p>
           <div class="language-toggle">
             <div class="toggle-container">
               <label class="switch">
@@ -49,25 +53,24 @@
 
         <ul class="bottom-menu">
           <li class="settings-item" @click="onSettingsClick">
-            <img :src="SettingsImage" alt="Settings Icon" class="bottom-icon" />
-            Settings
+            <img :src="SettingsImage" :alt="t('sidebar.settingsAlt')" class="bottom-icon" />
+            {{ t('sidebar.settings') }}
           </li>
           <li class="logout-item" @click="onLogoutClick">
-            <img :src="LogoutImage" alt="Logout Icon" class="bottom-icon" />
-            Logout
+            <img :src="LogoutImage" :alt="t('sidebar.logoutAlt')" class="bottom-icon" />
+            {{ t('sidebar.logout') }}
           </li>
         </ul>
 
         <div class="theme-toggle">
           <div class="theme-switch">
             <button @click="setDarkMode(true)" :class="{ active: isDark }">
-              <img :src="DarkIcon" alt="Dark Mode" class="theme-icon" />
-              <span>Dark</span>
+              <img :src="DarkIcon" :alt="t('sidebar.darkModeAlt')" class="theme-icon" />
+              <span>{{ t('sidebar.dark') }}</span>
             </button>
-
             <button @click="setDarkMode(false)" :class="{ active: !isDark }">
-              <img :src="LightIcon" alt="Light Mode" class="theme-icon" />
-              <span>Light</span>
+              <img :src="LightIcon" :alt="t('sidebar.lightModeAlt')" class="theme-icon" />
+              <span>{{ t('sidebar.light') }}</span>
             </button>
           </div>
         </div>
@@ -80,8 +83,10 @@
 /* global defineEmits */
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
-// define emits for sidebar actions
+const { t, locale } = useI18n()
+const router = useRouter()
 const emit = defineEmits(['themeChanged', 'languageChanged', 'createClicked', 'settingsClicked', 'logoutClicked'])
 
 import homeIcon from '@/assets/Home.svg'
@@ -97,55 +102,49 @@ import NotificationImage from '@/assets/Notification.svg'
 import DarkIcon from '@/assets/Dark-icon-1.svg'
 import LightIcon from '@/assets/Light-icon.svg'
 
-const router = useRouter()
-
 const isDark = ref(true)
-const isEnglish = ref(false)
-const activeMenu = ref('Home')
+const activeMenu = ref('home')
 
 const menuItems = [
-  { id: 1, icon: CollectionImage, label: 'Collection', route: '/collection' },
-  { id: 2, icon: DownloadsImage, label: 'Downloads', route: '/downloads' },
-  { id: 3, icon: ChatImage, label: 'Chat', route: '/chat' },
-  { id: 4, icon: HistoryImage, label: 'History', route: '/history' }
+  { id: 1, icon: CollectionImage, label: 'sidebar.collection', alt: 'sidebar.collectionAlt', key: 'collection', route: '/collection' },
+  { id: 2, icon: DownloadsImage, label: 'sidebar.downloads', alt: 'sidebar.downloadsAlt', key: 'downloads', route: '/downloads' },
+  { id: 3, icon: ChatImage, label: 'sidebar.chat', alt: 'sidebar.chatAlt', key: 'chat', route: '/chat' },
+  { id: 4, icon: HistoryImage, label: 'sidebar.history', alt: 'sidebar.historyAlt', key: 'history', route: '/history' }
 ]
 
 const setDarkMode = (mode) => {
   isDark.value = mode
 }
 
-const setActive = (label, route) => {
-  activeMenu.value = label
+const setActive = (key, route) => {
+  activeMenu.value = key
   router.push(route)
 }
 
-
-const onCreateClick = () => {
-
-  emit('createClicked')
-}
-const onSettingsClick = () => {
-
-  emit('settingsClicked')
-}
-const onLogoutClick = () => {
-
-  emit('logoutClicked')
-}
+const onCreateClick = () => emit('createClicked')
+const onSettingsClick = () => emit('settingsClicked')
+const onLogoutClick = () => emit('logoutClicked')
 
 watch(isDark, (newVal) => {
   document.body.classList.toggle('dark-theme', newVal)
   document.body.classList.toggle('light-theme', !newVal)
   emit('themeChanged', newVal ? 'dark' : 'light')
 })
+const isEnglish = ref(locale.value === 'en')
 
 watch(isEnglish, (newVal) => {
-
-  emit('languageChanged', newVal ? 'en' : 'fr')
+  locale.value = newVal ? 'en' : 'ar'  // change 'fr' to 'ar'
+  emit('languageChanged', locale.value)
 })
+
 </script>
 <style>
-
+:global(.dark) .app-sidebar {
+  background-color: #1E2235;
+}
+:global(.light) .app-sidebar {
+  background-color: #f3f4f6;
+}
 
 /* ===== Custom Light Theme Styling ===== */
 .light-theme .app-sidebar .menu-text,
@@ -183,7 +182,7 @@ watch(isEnglish, (newVal) => {
   --inactive-text-color: #9ca3af;
 }
 
-bod.dark-theme {
+body.dark-theme {
   --sidebar-bg-color: #1f2937;
   --text-color: white;
   --active-bg-color: #252A41;
@@ -192,7 +191,7 @@ bod.dark-theme {
 
 .light-theme {
   --sidebar-bg-color: #f3f4f6;
-  --text-color: #333; /* Keep as is */
+  --text-color: #333;
   --active-bg-color: #d1d5db;
   --inactive-text-color: #9ca3af;
 

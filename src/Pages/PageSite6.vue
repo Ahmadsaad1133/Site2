@@ -203,7 +203,7 @@
   import Navigateright from '@/assets/Navigation-right.svg'
   import Home from '@/assets/Home.svg'
   import Staricon from '@/assets/Star.svg'
-  import Bluebackground from '@/assets/Blue-background.webp'
+  import Bluebackground from '@/assets/Blue-background.svg'
   import Midimg from '@/assets/Mid-img.webp'
   import Buttondark from '@/assets/Button-dark.svg'
   import Arrow from '@/assets/Arrow.svg'

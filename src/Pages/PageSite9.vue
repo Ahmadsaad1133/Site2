@@ -270,10 +270,15 @@ const onCreateClick = () => alert('create pressed')
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-.PageSite9 { position: fixed; inset: 0; display: flex; transform: scaleX(-1); flex-direction: column; }
+.PageSite9 {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: row;     /* ← arrange children horizontally */  /* ← keep your global mirror if you really need it */
+  }
 .container-full { flex: 1; background-color: white; display: flex; min-height: 0; }
-.main-content { flex: 1; min-height: 0; margin-top: 50px; display: flex; margin-left: 72px; flex-direction: column; }
-.content-column { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.main-content { flex: 1; min-height: 0; margin-top: 50px; display: flex; margin-right: 72px; flex-direction: column; }
+.content-column { flex: 1; min-height: 0; display: flex; flex-direction: column;transform: scaleX(-1); }
 .header-row { display: flex; align-items: center; margin-right: 335px; margin-left: 20px; justify-content: space-between; height: 48px; }
 .bell-container { width: 261px; height: 48px; padding-right: 18px; transform: scaleX(-1); display: flex; align-items: center; gap:14px; }
 .profile-icon { width:44px; height:44px; margin-left:8px; }
@@ -316,9 +321,19 @@ const onCreateClick = () => alert('create pressed')
 .icons { display:flex; gap:12px; align-items:center; color:#6B7280; }
 .icon-group { display:flex; align-items:center; gap:4px; font-size:14px; }
 .icon { width:16px; height:16px; }
-.sidebar { position:fixed; top:0; right:0; bottom:0; width:264px; background:#F3F4F6; display:flex; flex-direction:column; z-index:20; }
-.sidebar-column { flex:1; display:flex; flex-direction:column; padding:32px 12px 16px; gap:24px; }
-.sidebar-header-row { display:flex; gap:10px; align-items:center; justify-content:center; flex-direction:row-reverse; }
+.sidebar {
+    position: fixed;
+    top:    0;
+    right:  0;       /* ← anchor here in code */
+    bottom: 0;
+    width:  264px;
+    background: #F3F4F6;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+  }
+.sidebar-column { flex:1; display:flex; flex-direction:column; padding:32px 12px 16px; gap:24px;transform:scaleX(-1); }
+.sidebar-header-row { display:flex; gap:10px; align-items:center; justify-content:center;  }
 .header-icon { width:24px; height:40px; transform:scaleX(-1); margin-right:8px; }
 .header-img { width:108px; height:30px; transform:scaleX(-1); }
 .sidebar-button-row { display:flex; justify-content:flex-start; }

@@ -1,72 +1,79 @@
 <template>
-  <div class="main-layout flex">
-    <AppSidebar class="sidebar" />
+  <div class="main-layout flex" :dir="isRTL ? 'rtl' : 'ltr'">
+    <AppSidebar
+      class="sidebar"
+      @themeChanged="onThemeChanged"
+      @localeChanged="onLocaleChanged"
+    />
 
-    <div class="main-column flex flex-col ml-[264px]">
-
-
+    <div class="main-column flex flex-col">
       <AppHeader
-        class="header px-[72px]"
+        class="header"
         :user="props.user"
         :categories="props.categories"
         @themeChanged="onThemeChanged"
       />
 
       <div class="content-wrapper hide-scroll">
-       
-          <slot />
-        </div>
+        <slot />
       </div>
     </div>
+  </div>
 </template>
 
 <script setup>
-import AppSidebar from '@/components/Common/AppSidebar.vue'
-import AppHeader  from '@/components/Common/AppHeader.vue'
+/* eslint-disable no-undef */
+import { computed } from 'vue'
+import { useI18n }   from 'vue-i18n'
+import AppSidebar    from '@/components/Common/AppSidebar.vue'
+import AppHeader     from '@/components/Common/AppHeader.vue'
 
-// eslint-disable-next-line no-undef
 const props = defineProps({
-  user: { type: Object, required: true },
+  user:       { type: Object, required: true },
   categories: { type: Array,  required: true },
 })
-// eslint-disable-next-line no-undef
-const emit = defineEmits(['themeChanged'])
-function onThemeChanged(newTheme) { emit('themeChanged', newTheme) }
+const emit = defineEmits(['themeChanged','localeChanged'])
+
+const { locale } = useI18n({ useScope: 'global' })
+const isRTL = computed(() => locale.value === 'ar')
+
+function onThemeChanged(newTheme) {
+  emit('themeChanged', newTheme)
+}
+
+function onLocaleChanged() {
+  const next = locale.value === 'en' ? 'ar' : 'en'
+  locale.value = next
+  emit('localeChanged', next)
+}
 </script>
 
 <style scoped>
-
 .sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset-inline-start: 0;    
   width: 264px;
   height: 100vh;
-  background: #1f2937;
   overflow-y: auto;
   z-index: 100;
 }
 
-
 .main-column {
   display: flex;
   flex-direction: column;
-  margin-left: 264px;
+  margin-inline-start: 264px;
   height: 100vh;
 }
 
-
 .header {
   position: sticky;
-  top: 0;
   z-index: 50;
   width: 100%;
 }
 
 .content-wrapper {
   flex: 1;              
-  padding-left: 55px;    
-  padding-right: 55px;  
+  padding-inline: 55px;
   overflow-y: auto;      
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -75,4 +82,3 @@ function onThemeChanged(newTheme) { emit('themeChanged', newTheme) }
   display: none;
 }
 </style>
-
